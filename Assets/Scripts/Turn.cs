@@ -2,27 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Turn : MonoBehaviour
 {
     public enum ActionType { MEELE, RANGED};
 
     public BaseClass Attacker;
-    public List<BaseClass> Targets;
+    public BaseClass Target;
 
-    public float damageValue;
+    private float damageValue;
+    public float DamageValue
+    {
+        get
+        {
+            if (chosenAttack == null)
+                return damageValue;
+            else
+                return chosenAttack.DamageValue;
+        }
+        set
+        {
+            damageValue = value;
+        }
+    }
     public ActionType actionType; // we will use this for basic animations
 
     public BaseAttack chosenAttack;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public bool AoE;
 }

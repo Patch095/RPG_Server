@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BaseAttack : MonoBehaviour
+abstract public class BaseAttack : MonoBehaviour
 {
     public string AttackName;
     public string AttackDescription;
@@ -13,5 +13,12 @@ public class BaseAttack : MonoBehaviour
     public bool AOE;
     public bool RandomTargets;
 
+    protected abstract void AttackInit();
+
     public BaseAttack() { }
+
+    private void Start()
+    {
+        AttackInit();
+    }
 }

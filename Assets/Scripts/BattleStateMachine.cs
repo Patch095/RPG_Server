@@ -5,8 +5,8 @@ public class BattleStateMachine : MonoBehaviour
 {
     public enum PerformAction
     {
-        WAIT,
-        TAKE_ACTION,
+        IDLE,
+        PROCESSING_TURN,
         PERFORM_ACTION
     }
     public PerformAction BattleState;
@@ -19,16 +19,17 @@ public class BattleStateMachine : MonoBehaviour
 
     private Turn selectedAction;
 
+    public List<CharacterStateMachine> CharactersToManage;
     // Start is called before the first frame update
     void Start()
     {
         TurnOrder = new List<Turn>();
-
+        CharactersToManage = new List<CharacterStateMachine>();
         BlueTeamInBattle = new List<BaseClass>();        
         RedTeamInBattle = new List<BaseClass>();
         DeathCharacters = new List<BaseClass>();
 
-        BattleState = PerformAction.WAIT;
+        BattleState = PerformAction.IDLE;
     }
 
     public void AddToTeamList(BaseClass player)
@@ -40,11 +41,20 @@ public class BattleStateMachine : MonoBehaviour
     }
     public void OnCharacterDeath(BaseClass deadCharacter)
     {
-        if (deadCharacter.GetComponent("BlueTeam"))
+        if (deadCharacter.TeamTag == "BlueTeam")
             BlueTeamInBattle.Remove(deadCharacter);
-        else if (deadCharacter.GetComponent("RedTeam"))
+        else if (deadCharacter.TeamTag == "RedTeam")
             RedTeamInBattle.Remove(deadCharacter);
         DeathCharacters.Add(deadCharacter);
+    }
+    public void OnCharacterResurection(BaseClass resurrectedCharacter)
+    {
+        DeathCharacters.Remove(resurrectedCharacter);
+        resurrectedCharacter.tag = resurrectedCharacter.TeamTag;
+        if (resurrectedCharacter.TeamTag == "BlueTeam")
+            BlueTeamInBattle.Add(resurrectedCharacter);
+        else if (resurrectedCharacter.TeamTag == "RedTeam")
+            RedTeamInBattle.Remove(resurrectedCharacter);
     }
 
     // Update is called once per frame
@@ -52,42 +62,21 @@ public class BattleStateMachine : MonoBehaviour
     {
         switch (BattleState)
         {
-            case PerformAction.WAIT:
-                //Idle
+            case PerformAction.IDLE:
                 if (TurnOrder.Count > 0)
-                {
-                    BattleState = PerformAction.TAKE_ACTION;
-                }
+                    BattleState = PerformAction.PROCESSING_TURN;
                 break;
 
-            case PerformAction.TAKE_ACTION:
+            case PerformAction.PROCESSING_TURN:
                 BaseClass turnPerformer = TurnOrder[0].Attacker;
-                if (TurnOrder[0].Targets.Count > 1) //aoe attack
-                {
-                    foreach (BaseClass target in TurnOrder[0].Targets)
-                    {
-                        CharacterStateMachine TargetSM = target.GetComponent<CharacterStateMachine>();
-                        TargetSM.currentState = CharacterStateMachine.TurnState.ACTION;
-                    }
-                }
-                else //signle attack
-                {
-                    BaseClass target = TurnOrder[0].Targets[0];
-                    if(!target.IsAlive) //target is dead, find new target
-                    {
-                        BaseClass newTarget = target;
-                        if (target.TeamTag == "BlueTeam")
-                            newTarget = BlueTeamInBattle[Random.Range(0, BlueTeamInBattle.Count)];
-                        else if (target.TeamTag == "RedTeam")
-                            newTarget = RedTeamInBattle[Random.Range(0, RedTeamInBattle.Count)];
-                        TurnOrder[0].Targets[0] = newTarget;
-                        CharacterStateMachine TargetSM = newTarget.GetComponent<CharacterStateMachine>();
-                        TargetSM.currentState = CharacterStateMachine.TurnState.ACTION;
-                    }
-                }
+                CharacterStateMachine FSM = turnPerformer.GetFSM();
+                FSM.Target = TurnOrder[0].Target.transform;
+                FSM.currentState = CharacterStateMachine.TurnState.ACTION;
+                BattleState = PerformAction.PERFORM_ACTION;
                 break;
 
             case PerformAction.PERFORM_ACTION:
+                // waiting for player animation and calculate damage
                 break;
         }
     }
@@ -97,8 +86,13 @@ public class BattleStateMachine : MonoBehaviour
         TurnOrder.Add(newTurn);
     }
 
-    public void ReceiveInput()
+    public void DamageCalculation()
     {
-        //he receive from UIManager 
+        TurnOrder[0].Target.CurrentHp = TurnOrder[0].DamageValue;
+    }
+    public void OnTurnEnd()
+    {
+        TurnOrder.RemoveAt(0);
+        BattleState = PerformAction.IDLE;
     }
 }

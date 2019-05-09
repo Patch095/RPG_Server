@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class PaladinClass : BaseClass
 {
-    public List<BaseAttack> PaladinSpell;
-
-    public PaladinClass() : base()
-    {
-    }
+    PaladinSkill_ShieldSlam shieldSlam;
 
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            Name = name + "_paladin";
+            Name = name + "_Paladin";
         else
             Name = name;
 
@@ -27,12 +23,16 @@ public class PaladinClass : BaseClass
     // Start is called before the first frame update
     void Start()
     {
-        
+        ClassSpells = new List<BaseAttack>();
+        shieldSlam = this.gameObject.GetComponent<PaladinSkill_ShieldSlam>();
+        ClassSpells.Add(shieldSlam);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        //Shield Slam
+        float hpScalingValue = CurrentHp / (MaxHp * 2);
+        float hpScaling = BaseAtk * hpScalingValue;
+        shieldSlam.SetDamage(BaseAtk + hpScaling);
     }
 }

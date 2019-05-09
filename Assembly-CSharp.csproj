@@ -60,18 +60,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\READ ME!!!.cs" />
     <Compile Include="Assets\Scripts\AutoRotating.cs" />
-    <Compile Include="Assets\Scripts\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\BattleStateMachine.cs" />
     <Compile Include="Assets\Scripts\CharacterStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Classes\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\Classes\BaseClass.cs" />
     <Compile Include="Assets\Scripts\Classes\HealerClass.cs" />
     <Compile Include="Assets\Scripts\Classes\MageClass.cs" />
-    <Compile Include="Assets\Scripts\Classes\PaladinClass.cs" />
+    <Compile Include="Assets\Scripts\Classes\Paladin\PaladinClass.cs" />
+    <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_ShieldSlam.cs" />
     <Compile Include="Assets\Scripts\Classes\RougeClass.cs" />
-    <Compile Include="Assets\Scripts\TeamColorBase.cs" />
+    <Compile Include="Assets\Scripts\OnGameStar.cs" />
     <Compile Include="Assets\Scripts\Turn.cs" />
-    <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\Scripts\UI\CharacterUISettings.cs" />
+    <Compile Include="Assets\Scripts\UI\SpellSelection.cs" />
+    <Compile Include="Assets\Scripts\UI\TargetSelectButton.cs" />
+    <Compile Include="Assets\Scripts\UI\TeamColorBase.cs" />
+    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
       <HintPath>C:/Users/Tommaso/Documents/Unity Project/RPG Server/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
     </Reference>

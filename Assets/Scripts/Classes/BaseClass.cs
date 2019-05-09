@@ -11,11 +11,11 @@ abstract public class BaseClass : MonoBehaviour
     public float MaxHp;
     private float currentHp;
     public float CurrentHp { get { return currentHp; } set { ReceiveDamage(value); } }
-    public void ReceiveDamage(float damage)
+    private void ReceiveDamage(float damage)
     {
         currentHp -= damage;
         Mathf.Clamp(currentHp, 0, MaxHp);
-        if (currentHp == 0)
+        if (!IsAlive)
             FSM.currentState = CharacterStateMachine.TurnState.DEAD;
     }
     public bool IsAlive { get { return currentHp > 0; } }
@@ -29,15 +29,16 @@ abstract public class BaseClass : MonoBehaviour
     public string TeamTag; //redTeam - blueTeam
 
     private CharacterStateMachine FSM;
-
-    public List<BaseAttack> basicActions;
+    public CharacterStateMachine GetFSM()
+    {
+        return FSM;
+    }
 
     void OnEnable()
     {
         ClassInit("Default");
         FSM = GetComponent<CharacterStateMachine>();
         FSM.owner = this;
-        basicActions = new List<BaseAttack>();
         OnBattleStart();
     }
 
@@ -50,15 +51,6 @@ abstract public class BaseClass : MonoBehaviour
         this.gameObject.tag = TeamTag;
     }
 
-    protected void BasicAbiltyInit()
-    {
-        //Basic Attack Command
-        BaseAttack basicAttack = new BaseAttack();
-    }
+    public List<BaseAttack> ClassSpells;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
