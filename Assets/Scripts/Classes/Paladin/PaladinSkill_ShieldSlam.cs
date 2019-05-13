@@ -10,7 +10,13 @@ public class PaladinSkill_ShieldSlam : BaseAttack
     {
         AttackName = "Shield Slam";
         AttackDescription = "Attack a single Target, damage scales with your current HP";
-        ManaCost = 8f;      
+        ManaCost = 8f;
+
+        AOE = false;
+        RandomTargets = false;
+        HaveAdditionEffects = false;
+
+        AbilityType = ActionType.MEELE;
     }
     public void SetDamage(float damage)
     {

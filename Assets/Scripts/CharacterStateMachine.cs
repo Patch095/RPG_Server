@@ -56,7 +56,7 @@ public class CharacterStateMachine : MonoBehaviour
     {
         onAnimation = false;
         startPos = this.transform.position;
-        currentCooldown = Random.RandomRange(0, maxCooldown / 2f);
+        currentCooldown = Random.Range(0, maxCooldown / 2f);
         selector = this.transform.GetChild(0).gameObject;
         isSelected = false;
 
@@ -132,8 +132,10 @@ public class CharacterStateMachine : MonoBehaviour
 
     void ChooseAction()
     {
-        Turn action = new Turn();
-        action.Attacker = owner;
+        Turn action = new Turn
+        {
+            Attacker = owner
+        };
 
         BSM.ReceiveAction(action);
     }
@@ -144,18 +146,26 @@ public class CharacterStateMachine : MonoBehaviour
             yield break;
 
         onAnimation = true;
+
         //Animation
-        Vector3 offset = Target.forward * 1.8f;
-        endPos = Target.position + offset;
-        while (MoveTowardTarget(endPos)) //move toward attack target
-            yield return null;
+        if (BSM.TurnOrder[0].actionType == Turn.AnimationType.MEELE)
+        {
+            Vector3 offset = Target.forward * 1.8f;
+            endPos = Target.position + offset;
+            while (MoveTowardTarget(endPos)) //move toward attack target
+                yield return null;
 
-        yield return new WaitForSeconds(0.35f);//Damage Calculation
-        BSM.DamageCalculation();
+            yield return new WaitForSeconds(0.35f);//Damage Calculation
+            BSM.DamageCalculation();
+            BSM.ApplyAdditionEffects();
 
-        while (MoveTowardTarget(startPos)) //return to your startPosition
-            yield return null;
+            while (MoveTowardTarget(startPos)) //return to your startPosition
+                yield return null;
+        }
+        else if (BSM.TurnOrder[0].actionType == Turn.AnimationType.RANGED)
+        {
 
+        }
         //animation is finished
         BSM.OnTurnEnd();
         BSM.BattleState = BattleStateMachine.PerformAction.IDLE;

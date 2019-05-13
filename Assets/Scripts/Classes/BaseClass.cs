@@ -10,11 +10,11 @@ abstract public class BaseClass : MonoBehaviour
 
     public float MaxHp;
     private float currentHp;
-    public float CurrentHp { get { return currentHp; } set { ReceiveDamage(value); } }
+    public float CurrentHp { get { return currentHp = Mathf.Clamp(currentHp, 0, MaxHp); } set { ReceiveDamage(value); } }
     private void ReceiveDamage(float damage)
     {
         currentHp -= damage;
-        Mathf.Clamp(currentHp, 0, MaxHp);
+        currentHp = Mathf.Clamp(currentHp, 0, MaxHp);
         if (!IsAlive)
             FSM.currentState = CharacterStateMachine.TurnState.DEAD;
     }
@@ -52,5 +52,4 @@ abstract public class BaseClass : MonoBehaviour
     }
 
     public List<BaseAttack> ClassSpells;
-
 }

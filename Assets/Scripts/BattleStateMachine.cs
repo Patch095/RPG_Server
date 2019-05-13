@@ -90,6 +90,11 @@ public class BattleStateMachine : MonoBehaviour
     {
         TurnOrder[0].Target.CurrentHp = TurnOrder[0].DamageValue;
     }
+    public void ApplyAdditionEffects()
+    {
+        if(TurnOrder[0].HaveAdditionEffects)
+            TurnOrder[0].chosenAttack.AdditionalEffect();
+    }
     public void OnTurnEnd()
     {
         TurnOrder.RemoveAt(0);

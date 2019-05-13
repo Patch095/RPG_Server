@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Classes\HealerClass.cs" />
     <Compile Include="Assets\Scripts\Classes\MageClass.cs" />
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinClass.cs" />
+    <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_HolyStrenght.cs" />
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_ShieldSlam.cs" />
     <Compile Include="Assets\Scripts\Classes\RougeClass.cs" />
     <Compile Include="Assets\Scripts\OnGameStar.cs" />

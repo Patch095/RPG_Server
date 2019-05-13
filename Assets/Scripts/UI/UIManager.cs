@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour
     Dictionary<TargetSelectButton, Button> BlueTeamTarges;
     public GameObject BlueTeamCommandMenu;
     public Transform BlueTeamSpellsMenu;
+    public Transform BlueTeamSelectedSpellInfo;
 
     //Red Team UI
 
@@ -42,6 +44,7 @@ public class UIManager : MonoBehaviour
         BlueTeamCommandMenu.SetActive(false);
         BlueTeamTargetsMenu.gameObject.SetActive(false);
         BlueTeamSpellsMenu.gameObject.SetActive(false);
+        BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
     }
 
     void SetUI()
@@ -114,6 +117,9 @@ public class UIManager : MonoBehaviour
             TargetSelectButton key = keyValue.Key;
             Button value = keyValue.Value;
             value.interactable = key.Target.IsAlive;
+
+            Text buttonText = value.GetComponentInChildren<Text>();
+            buttonText.text = key.Target.Name + "\n" + key.Target.CurrentHp + "/" + key.Target.MaxHp;
         }
     }
 
@@ -121,7 +127,7 @@ public class UIManager : MonoBehaviour
     {
         BlueTeamSpellsMenu.gameObject.SetActive(false);
         playerChoise.DamageValue = (float)BSM.CharactersToManage[0].owner.BaseAtk;
-        playerChoise.actionType = Turn.ActionType.MEELE;
+        playerChoise.actionType = Turn.AnimationType.MEELE;
 
         if (BSM.CharactersToManage[0].tag == "BlueTeam")
             BlueTeamTargetsMenu.gameObject.SetActive(true);
@@ -143,6 +149,8 @@ public class UIManager : MonoBehaviour
             button.interactable = attackerClass.CurrentMp > currentSkill.ManaCost;
             skillButton.GetComponent<SpellSelection>().UImanager = this;
             skillButton.GetComponent<SpellSelection>().Spell = currentSkill;
+            skillButton.GetComponent<SpellSelection>().SelectedSpellMenu = BlueTeamSelectedSpellInfo;
+
             skillButton.SetActive(true);
         }
         BlueTeamSpellsMenu.gameObject.SetActive(true);
@@ -151,9 +159,19 @@ public class UIManager : MonoBehaviour
     public void MagicSelection(BaseAttack Spell)
     {
         playerChoise.chosenAttack = Spell;
-
-        if (BSM.CharactersToManage[0].tag == "BlueTeam")
-            BlueTeamTargetsMenu.gameObject.SetActive(true);
+        if (playerChoise.IsAoE)//isRandom
+            AoETargetSelection();//randomTarget
+        else
+        {
+            if (BSM.CharactersToManage[0].tag == "BlueTeam")
+                BlueTeamTargetsMenu.gameObject.SetActive(true);
+        }
+    }
+    void AoETargetSelection()
+    {
+        //if (playerChoise.chosen.aoe)
+        //playerChoise.chosen.selectAOEtarget() metodo della spell
+        //PlayerInput = GUIState.DONE;
     }
 
     public void TargetSelection(BaseClass choosenTarget)
@@ -164,7 +182,7 @@ public class UIManager : MonoBehaviour
 
     void PlayerInputDone()
     {
-        BSM.ReceiveAction(playerChoise);
+        BSM.CharactersToManage[0].owner.CurrentMp -= playerChoise.ManaCost;
         if (BSM.CharactersToManage[0].tag == "BlueTeam")
             BlueTeamTargetsMenu.gameObject.SetActive(false);
         BlueTeamSpellsMenu.gameObject.SetActive(false);

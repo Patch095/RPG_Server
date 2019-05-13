@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Turn : MonoBehaviour
+//public class Turn : MonoBehaviour
+public class Turn
 {
-    public enum ActionType { MEELE, RANGED};
+    public enum AnimationType { MEELE, RANGED};
 
     public BaseClass Attacker;
     public BaseClass Target;
@@ -25,9 +26,49 @@ public class Turn : MonoBehaviour
             damageValue = value;
         }
     }
-    public ActionType actionType; // we will use this for basic animations
+
+    public float ManaCost
+    {
+        get
+        {
+            if (chosenAttack == null)
+                return 0;
+            else
+                return chosenAttack.ManaCost;
+        }
+    }
+
+    public AnimationType actionType; // we will use this for basic animations
+    public AnimationType Animation
+    {
+        get
+        {
+            if (chosenAttack == null)
+                return actionType;
+            else
+            {
+                if (chosenAttack.AbilityType == BaseAttack.ActionType.MEELE)
+                    actionType = AnimationType.MEELE;
+                else if (chosenAttack.AbilityType == BaseAttack.ActionType.RANGED)
+                    actionType = AnimationType.RANGED;
+            }
+            return actionType;
+        }
+    }
 
     public BaseAttack chosenAttack;
 
-    public bool AoE;
+
+    public bool IsAoE;
+    public bool HaveRandomTargets;
+    public bool HaveAdditionEffects
+    {
+        get
+        {
+            if (chosenAttack == null)
+                return false;
+            else
+                return chosenAttack.HaveAdditionEffects;
+        }
+    }
 }

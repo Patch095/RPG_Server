@@ -5,6 +5,7 @@ using UnityEngine;
 public class PaladinClass : BaseClass
 {
     PaladinSkill_ShieldSlam shieldSlam;
+    PaladinSkill_HolyStrenght holyStrenght;
 
     protected override void ClassInit(string name)
     {
@@ -26,6 +27,9 @@ public class PaladinClass : BaseClass
         ClassSpells = new List<BaseAttack>();
         shieldSlam = this.gameObject.GetComponent<PaladinSkill_ShieldSlam>();
         ClassSpells.Add(shieldSlam);
+        holyStrenght = this.gameObject.GetComponent<PaladinSkill_HolyStrenght>();
+        holyStrenght.owner = this;
+        ClassSpells.Add(holyStrenght);
     }
 
     private void Update()
@@ -34,5 +38,8 @@ public class PaladinClass : BaseClass
         float hpScalingValue = CurrentHp / (MaxHp * 2);
         float hpScaling = BaseAtk * hpScalingValue;
         shieldSlam.SetDamage(BaseAtk + hpScaling);
+
+        //Holy Strenght
+        holyStrenght.SetDamage(BaseAtk);
     }
 }
