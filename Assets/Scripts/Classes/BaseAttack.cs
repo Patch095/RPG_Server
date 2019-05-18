@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 abstract public class BaseAttack : MonoBehaviour
 {
-    public enum ActionType { MEELE, RANGED };
+    public enum ActionType { MEELE, RANGED, BUFF};
     public ActionType AbilityType;
 
     public string AttackName;
@@ -16,6 +16,8 @@ abstract public class BaseAttack : MonoBehaviour
     public bool AOE;
     public bool RandomTargets;
     public bool HaveAdditionEffects;
+    public Turn TurnInfo;
+    public bool TargetAllies;
 
     protected abstract void AttackInit();
 

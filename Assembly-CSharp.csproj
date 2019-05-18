@@ -66,10 +66,13 @@
     <Compile Include="Assets\Scripts\CharacterStateMachine.cs" />
     <Compile Include="Assets\Scripts\Classes\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\Classes\BaseClass.cs" />
-    <Compile Include="Assets\Scripts\Classes\HealerClass.cs" />
+    <Compile Include="Assets\Scripts\Classes\Healer\HealerClass.cs" />
+    <Compile Include="Assets\Scripts\Classes\Healer\HealerSkill_HeavyWeather.cs" />
     <Compile Include="Assets\Scripts\Classes\MageClass.cs" />
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinClass.cs" />
+    <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_ArmorUp.cs" />
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_HolyStrenght.cs" />
+    <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_SacredSmite.cs" />
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_ShieldSlam.cs" />
     <Compile Include="Assets\Scripts\Classes\RougeClass.cs" />
     <Compile Include="Assets\Scripts\OnGameStar.cs" />

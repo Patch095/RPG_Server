@@ -168,7 +168,6 @@ public class CharacterStateMachine : MonoBehaviour
         }
         //animation is finished
         BSM.OnTurnEnd();
-        BSM.BattleState = BattleStateMachine.PerformAction.IDLE;
 
         onAnimation = false;
 

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BattleStateMachine : MonoBehaviour
 {
+    UIManager UI;
+
     public enum PerformAction
     {
         IDLE,
@@ -23,6 +25,8 @@ public class BattleStateMachine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UI = GetComponent<UIManager>();
+
         TurnOrder = new List<Turn>();
         CharactersToManage = new List<CharacterStateMachine>();
         BlueTeamInBattle = new List<BaseClass>();        
@@ -99,5 +103,7 @@ public class BattleStateMachine : MonoBehaviour
     {
         TurnOrder.RemoveAt(0);
         BattleState = PerformAction.IDLE;
+
+        UI.PlayerInput = UIManager.GUIState.ACTIVATED;
     }
 }

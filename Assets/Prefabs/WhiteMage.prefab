@@ -61717,6 +61717,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0948b295b94ba44469c06e6bb69e5721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
+  ClassName: 
+  MaxHp: 0
+  MaxMp: 0
+  CurrentMp: 0
+  BaseAtk: 0
+  Speed: 0
+  TeamTag: 
+  ClassSpells: []
+--- !u!114 &8492653859233849175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109499434794650477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 831352bc68a765a4cb0187c5c91ea563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AOE: 0
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    actionType: 0
+    chosenAttack: {fileID: 0}
+    IsAoE: 0
+    HaveRandomTargets: 0
+  TargetAllies: 0
+  owner: {fileID: 0}
 --- !u!1001 &6010463744419952211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61728,6 +61766,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WhiteMage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5458253426045889210, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2034225667066401647, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
         type: 3}
@@ -61783,11 +61826,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5458253426045889210, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f3b0a0d9c54fef4d843eada9cafa18f, type: 3}

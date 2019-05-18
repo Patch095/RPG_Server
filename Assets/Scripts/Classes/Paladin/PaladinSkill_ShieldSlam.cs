@@ -15,6 +15,7 @@ public class PaladinSkill_ShieldSlam : BaseAttack
         AOE = false;
         RandomTargets = false;
         HaveAdditionEffects = false;
+        TargetAllies = false;
 
         AbilityType = ActionType.MEELE;
     }

@@ -58,7 +58,6 @@ public class Turn
 
     public BaseAttack chosenAttack;
 
-
     public bool IsAoE;
     public bool HaveRandomTargets;
     public bool HaveAdditionEffects
@@ -69,6 +68,17 @@ public class Turn
                 return false;
             else
                 return chosenAttack.HaveAdditionEffects;
+        }
+    }
+
+    public bool TargetAlly
+    {
+        get
+        {
+            if (chosenAttack == null)
+                return false;
+            else
+                return chosenAttack.TargetAllies;
         }
     }
 }

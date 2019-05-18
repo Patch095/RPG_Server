@@ -23,7 +23,8 @@ public class UIManager : MonoBehaviour
 
     //Blue Team UI
     public Transform BlueTeamCharactersMenu;
-    public Transform BlueTeamTargetsMenu;
+    public Transform BlueTeamAllyTargetsMenu;
+    public Transform BlueTeamEnemyTargetsMenu;
     Dictionary<TargetSelectButton, Button> BlueTeamTarges;
     public GameObject BlueTeamCommandMenu;
     public Transform BlueTeamSpellsMenu;
@@ -42,7 +43,8 @@ public class UIManager : MonoBehaviour
 
         PlayerInput = GUIState.ACTIVATED;
         BlueTeamCommandMenu.SetActive(false);
-        BlueTeamTargetsMenu.gameObject.SetActive(false);
+        BlueTeamAllyTargetsMenu.gameObject.SetActive(false);
+        BlueTeamEnemyTargetsMenu.gameObject.SetActive(false);
         BlueTeamSpellsMenu.gameObject.SetActive(false);
         BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
     }
@@ -60,18 +62,32 @@ public class UIManager : MonoBehaviour
             characterPannelInfo.GetComponent<CharacterUISettings>().Owner = BSM.BlueTeamInBattle[i];
             characterPannelInfo.SetActive(true);
         }
-        //Targets
-        foreach (Transform child in BlueTeamTargetsMenu)
+        //Targets Enemy
+        foreach (Transform child in BlueTeamEnemyTargetsMenu)
             child.gameObject.SetActive(false);
         for (int i = 0; i < BSM.RedTeamInBattle.Count; i++)
         {
-            GameObject button = BlueTeamTargetsMenu.GetChild(i).gameObject;
+            GameObject button = BlueTeamEnemyTargetsMenu.GetChild(i).gameObject;
             button.SetActive(true);
             Text text = button.GetComponentInChildren<Text>();
             text.text = BSM.RedTeamInBattle[i].Name;
             TargetSelectButton targerButton = button.GetComponent<TargetSelectButton>();
             targerButton.UImanager = this;
             targerButton.Target = BSM.RedTeamInBattle[i];
+            BlueTeamTarges.Add(targerButton, button.GetComponent<Button>());
+        }
+        //Targets Allies
+        foreach (Transform child in BlueTeamAllyTargetsMenu)
+            child.gameObject.SetActive(false);
+        for (int i = 0; i < BSM.BlueTeamInBattle.Count; i++)
+        {
+            GameObject button = BlueTeamAllyTargetsMenu.GetChild(i).gameObject;
+            button.SetActive(true);
+            Text text = button.GetComponentInChildren<Text>();
+            text.text = BSM.BlueTeamInBattle[i].Name;
+            TargetSelectButton targerButton = button.GetComponent<TargetSelectButton>();
+            targerButton.UImanager = this;
+            targerButton.Target = BSM.BlueTeamInBattle[i];
             BlueTeamTarges.Add(targerButton, button.GetComponent<Button>());
         }
     }
@@ -116,7 +132,10 @@ public class UIManager : MonoBehaviour
         {
             TargetSelectButton key = keyValue.Key;
             Button value = keyValue.Value;
-            value.interactable = key.Target.IsAlive;
+            if(BSM.BattleState == BattleStateMachine.PerformAction.PERFORM_ACTION)
+                value.interactable = false;
+            else
+                value.interactable = key.Target.IsAlive;
 
             Text buttonText = value.GetComponentInChildren<Text>();
             buttonText.text = key.Target.Name + "\n" + key.Target.CurrentHp + "/" + key.Target.MaxHp;
@@ -130,7 +149,7 @@ public class UIManager : MonoBehaviour
         playerChoise.actionType = Turn.AnimationType.MEELE;
 
         if (BSM.CharactersToManage[0].tag == "BlueTeam")
-            BlueTeamTargetsMenu.gameObject.SetActive(true);
+            BlueTeamEnemyTargetsMenu.gameObject.SetActive(true);
     }
 
     public void MagicSubMenuInit()
@@ -158,13 +177,20 @@ public class UIManager : MonoBehaviour
 
     public void MagicSelection(BaseAttack Spell)
     {
+        Spell.TurnInfo = playerChoise;
         playerChoise.chosenAttack = Spell;
         if (playerChoise.IsAoE)//isRandom
             AoETargetSelection();//randomTarget
         else
         {
+            //check team e target
             if (BSM.CharactersToManage[0].tag == "BlueTeam")
-                BlueTeamTargetsMenu.gameObject.SetActive(true);
+            {
+                if(playerChoise.TargetAlly)
+                    BlueTeamAllyTargetsMenu.gameObject.SetActive(true);
+                else
+                    BlueTeamEnemyTargetsMenu.gameObject.SetActive(true);
+            }
         }
     }
     void AoETargetSelection()
@@ -184,7 +210,10 @@ public class UIManager : MonoBehaviour
     {
         BSM.CharactersToManage[0].owner.CurrentMp -= playerChoise.ManaCost;
         if (BSM.CharactersToManage[0].tag == "BlueTeam")
-            BlueTeamTargetsMenu.gameObject.SetActive(false);
+        {
+            BlueTeamAllyTargetsMenu.gameObject.SetActive(false);
+            BlueTeamEnemyTargetsMenu.gameObject.SetActive(false);
+        }
         BlueTeamSpellsMenu.gameObject.SetActive(false);
         BlueTeamCommandMenu.gameObject.SetActive(false);
         BSM.CharactersToManage[0].OnSelection(false);

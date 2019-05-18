@@ -17,8 +17,9 @@ public class PaladinSkill_HolyStrenght : BaseAttack
         AOE = false;
         RandomTargets = false;
         HaveAdditionEffects = true;
+        TargetAllies = false;
 
-        AbilityType = ActionType.MEELE;
+        AbilityType = ActionType.RANGED;
     }
     public void SetDamage(float damage)
     {

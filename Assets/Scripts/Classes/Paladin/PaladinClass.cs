@@ -6,6 +6,8 @@ public class PaladinClass : BaseClass
 {
     PaladinSkill_ShieldSlam shieldSlam;
     PaladinSkill_HolyStrenght holyStrenght;
+    PaladinSkill_ArmorUp armorUp;
+    PaladinSkill_SacredSmite sacredSmite;
 
     protected override void ClassInit(string name)
     {
@@ -25,11 +27,20 @@ public class PaladinClass : BaseClass
     void Start()
     {
         ClassSpells = new List<BaseAttack>();
+
         shieldSlam = this.gameObject.GetComponent<PaladinSkill_ShieldSlam>();
         ClassSpells.Add(shieldSlam);
+
         holyStrenght = this.gameObject.GetComponent<PaladinSkill_HolyStrenght>();
         holyStrenght.owner = this;
         ClassSpells.Add(holyStrenght);
+
+        armorUp = this.gameObject.GetComponent<PaladinSkill_ArmorUp>();
+        ClassSpells.Add(armorUp);
+
+        sacredSmite = this.gameObject.GetComponent<PaladinSkill_SacredSmite>();
+        sacredSmite.owner = this;
+        ClassSpells.Add(sacredSmite);
     }
 
     private void Update()
