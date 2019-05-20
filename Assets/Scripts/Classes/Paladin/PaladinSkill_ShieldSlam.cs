@@ -13,10 +13,8 @@ public class PaladinSkill_ShieldSlam : BaseAttack
         ManaCost = 8f;
 
         AoE = false;
-<<<<<<< HEAD
+
         RandomTargets = false;
-=======
->>>>>>> 29bcd251cd6ebe137bb3f3e8dea1ce1c0321d20f
         HaveAdditionEffects = false;
         TargetAllies = false;
 

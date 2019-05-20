@@ -14,10 +14,8 @@ public class HealerSkill_HeavyWeather : BaseAttack
         DamageValue = 5f;
 
         AoE = true;
-<<<<<<< HEAD
+
         RandomTargets = false;
-=======
->>>>>>> 29bcd251cd6ebe137bb3f3e8dea1ce1c0321d20f
         HaveAdditionEffects = true;
         TargetAllies = false;
 

@@ -14,11 +14,8 @@ abstract public class BaseAttack : MonoBehaviour
     public float DamageValue;
 
     public bool AoE;
-<<<<<<< HEAD
     public List<BaseClass> AoeTarget;     
     public bool RandomTargets;
-=======
->>>>>>> 29bcd251cd6ebe137bb3f3e8dea1ce1c0321d20f
     public bool HaveAdditionEffects;
     public Turn TurnInfo;
     public bool TargetAllies;
