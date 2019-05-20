@@ -14,7 +14,7 @@ public class PaladinSkill_HolyStrenght : BaseAttack
         AttackDescription = "Attack a single Target skill that boost your damage, but increase it's mana cost";
         ManaCost = 12f;
 
-        AoE = false;
+        AOE = false;
         RandomTargets = false;
         HaveAdditionEffects = true;
         TargetAllies = false;

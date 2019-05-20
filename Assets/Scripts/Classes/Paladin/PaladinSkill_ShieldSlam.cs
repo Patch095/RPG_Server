@@ -12,7 +12,7 @@ public class PaladinSkill_ShieldSlam : BaseAttack
         AttackDescription = "Attack a single Target, damage scales with your current HP";
         ManaCost = 8f;
 
-        AoE = false;
+        AOE = false;
         RandomTargets = false;
         HaveAdditionEffects = false;
         TargetAllies = false;

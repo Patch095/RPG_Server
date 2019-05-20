@@ -21,8 +21,6 @@ public class SpellSelection : MonoBehaviour
 
         selectedSpellDescription.text = Spell.AttackName + " :\n " + Spell.AttackDescription;
         selectedSpellValue.text = "Mana cost : " + (int)Spell.ManaCost + "\n\nDamage: " + (int)Spell.DamageValue;
-        if (Spell.AoE)
-            selectedSpellValue.text += "\n\n AoE";
 
         SelectedSpellMenu.gameObject.SetActive(isActivated);
     }

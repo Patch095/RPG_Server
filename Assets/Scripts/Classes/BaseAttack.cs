@@ -13,7 +13,7 @@ abstract public class BaseAttack : MonoBehaviour
     public float ManaCost;
     public float DamageValue;
 
-    public bool AoE;
+    public bool AOE;
     public bool RandomTargets;
     public bool HaveAdditionEffects;
     public Turn TurnInfo;

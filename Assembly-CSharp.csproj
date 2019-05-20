@@ -75,8 +75,6 @@
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_SacredSmite.cs" />
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_ShieldSlam.cs" />
     <Compile Include="Assets\Scripts\Classes\RougeClass.cs" />
-    <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
-    <Compile Include="Assets\Scripts\Networking\Packet.cs" />
     <Compile Include="Assets\Scripts\OnGameStar.cs" />
     <Compile Include="Assets\Scripts\Turn.cs" />
     <Compile Include="Assets\Scripts\UI\CharacterUISettings.cs" />
