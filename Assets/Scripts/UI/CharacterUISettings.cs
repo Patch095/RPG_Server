@@ -49,21 +49,33 @@ public class CharacterUISettings : MonoBehaviour
         float hpFillGauge = Owner.CurrentHp / Owner.MaxHp;
         HPvalues.text = Owner.CurrentHp + " / " + Owner.MaxHp;
         HPBar.transform.localScale = new Vector3(Mathf.Clamp01(hpFillGauge), 1f, 1f);
+        //Bar setting
         if (hpFillGauge > 0.6f)
             HPBar.color = Color.green;
         else if (hpFillGauge < 0.2f)
             HPBar.color = Color.red;
         else
             HPBar.color = Color.yellow;
+        //Text Setting
+        if (hpFillGauge <= 0.45f)
+            HPvalues.color = Color.white;
+        else
+            HPvalues.color = Color.black;
 
         float mpFillGauge = Owner.CurrentMp / Owner.MaxMp;
         MPvalues.text = Owner.CurrentMp + " / " + Owner.MaxMp;
         MPBar.transform.localScale = new Vector3(Mathf.Clamp01(mpFillGauge), 1f, 1f);
+        //Bar setting
         if (mpFillGauge > 0.6f)
             MPBar.color = Color.blue;
         else if (mpFillGauge < 0.2f)
             MPBar.color = Color.grey;
         else
             MPBar.color = Color.magenta;
+        //Text Setting
+        if (mpFillGauge <= 0.45f)
+            MPvalues.color = Color.white;
+        else
+            MPvalues.color = Color.black;
     }
 }
