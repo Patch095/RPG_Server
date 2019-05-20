@@ -17,7 +17,8 @@ public class UIManager : MonoBehaviour
         ATTACK,
         MAGIC,
         TARGET_SELECTION,
-        DONE
+        DONE,
+        CANCEL
     }
     public GUIState PlayerInput;
 
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
     public GameObject BlueTeamCommandMenu;
     public Transform BlueTeamSpellsMenu;
     public Transform BlueTeamSelectedSpellInfo;
+    public GameObject CancelButtonBlueTeam;
 
     //Red Team UI
 
@@ -126,6 +128,10 @@ public class UIManager : MonoBehaviour
             case GUIState.DONE:
                 PlayerInputDone();
                 break;
+
+            case GUIState.CANCEL:
+                CancelInput();
+                break;
         }
 
         foreach(KeyValuePair<TargetSelectButton, Button> keyValue in BlueTeamTarges)
@@ -140,6 +146,8 @@ public class UIManager : MonoBehaviour
             Text buttonText = value.GetComponentInChildren<Text>();
             buttonText.text = key.Target.Name + "\n" + key.Target.CurrentHp + "/" + key.Target.MaxHp;
         }
+
+        CancelButtonBlueTeam.SetActive(BlueTeamAllyTargetsMenu.gameObject.activeInHierarchy || BlueTeamEnemyTargetsMenu.gameObject.activeInHierarchy);
     }
 
     public void AttackInput()
@@ -150,6 +158,18 @@ public class UIManager : MonoBehaviour
 
         if (BSM.CharactersToManage[0].tag == "BlueTeam")
             BlueTeamEnemyTargetsMenu.gameObject.SetActive(true);
+    }
+
+    public void CancelInput()
+    {
+        PlayerInput = GUIState.ACTIVATED;
+        BlueTeamCommandMenu.SetActive(false);
+        BlueTeamAllyTargetsMenu.gameObject.SetActive(false);
+        BlueTeamEnemyTargetsMenu.gameObject.SetActive(false);
+        BlueTeamSpellsMenu.gameObject.SetActive(false);
+        BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
+        playerChoise.chosenAttack = null;
+
     }
 
     public void MagicSubMenuInit()
@@ -165,7 +185,7 @@ public class UIManager : MonoBehaviour
             Button button = skillButton.GetComponent<Button>();
             Text text = skillButton.GetComponentInChildren<Text>();
             text.text = currentSkill.AttackName;
-            button.interactable = attackerClass.CurrentMp > currentSkill.ManaCost;
+            button.interactable = attackerClass.CurrentMp >= currentSkill.ManaCost;
             skillButton.GetComponent<SpellSelection>().UImanager = this;
             skillButton.GetComponent<SpellSelection>().Spell = currentSkill;
             skillButton.GetComponent<SpellSelection>().SelectedSpellMenu = BlueTeamSelectedSpellInfo;

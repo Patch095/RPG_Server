@@ -57,6 +57,7 @@ public class Turn
 
     public BaseAttack chosenAttack;
 
+<<<<<<< HEAD
     public bool IsAoE
     {
         get
@@ -82,6 +83,9 @@ public class Turn
         }
         
     }
+=======
+    public bool IsAoE;
+>>>>>>> 29bcd251cd6ebe137bb3f3e8dea1ce1c0321d20f
     public bool HaveAdditionEffects
     {
         get

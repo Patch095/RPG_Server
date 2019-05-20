@@ -16,7 +16,10 @@ public class PaladinSkill_SacredSmite : BaseAttack
         DamageValue = 10f;
 
         AoE = false;
+<<<<<<< HEAD
         RandomTargets = false;
+=======
+>>>>>>> 29bcd251cd6ebe137bb3f3e8dea1ce1c0321d20f
         HaveAdditionEffects = true;
         TargetAllies = false;
 

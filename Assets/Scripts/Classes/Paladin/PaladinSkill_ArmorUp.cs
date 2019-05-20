@@ -14,7 +14,10 @@ public class PaladinSkill_ArmorUp : BaseAttack
         DamageValue = 0f;
 
         AoE = false;
+<<<<<<< HEAD
         RandomTargets = false;
+=======
+>>>>>>> 29bcd251cd6ebe137bb3f3e8dea1ce1c0321d20f
         HaveAdditionEffects = true;
         TargetAllies = true;
 
