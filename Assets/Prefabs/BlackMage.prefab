@@ -1926,9 +1926,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 1309263408167686744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87d933382d7e9f42b95990acc4a482b, type: 3}
+  m_Script: {fileID: 11500000, guid: b63c4162f0c970b4bac1e9856434c917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
+  ClassName: 
+  MaxHp: 0
+  MaxMp: 0
+  CurrentMp: 0
+  BaseAtk: 0
+  Speed: 0
+  TeamTag: 
+  ClassSpells: []
+--- !u!114 &2610935327002452034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309263408167686744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 741998844be3d7244882912e2b987bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AOE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    AoeTarget: []
+    actionType: 0
+    chosenAttack: {fileID: 0}
+    IsAoE: 0
+  TargetAllies: 0
 --- !u!1001 &4667701650554220390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1939,8 +1977,18 @@ PrefabInstance:
     - target: {fileID: 5975275916526976318, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
         type: 3}
       propertyPath: m_Name
-      value: Mage
+      value: BlackMage
       objectReference: {fileID: 0}
+    - target: {fileID: 5458253426045889210, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: Blue
+      value: 
+      objectReference: {fileID: 5379862344182411318}
+    - target: {fileID: 5458253426045889210, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: Red
+      value: 
+      objectReference: {fileID: 3854177705994584458}
     - target: {fileID: 2034225667066401647, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2017,6 +2065,18 @@ GameObject:
 --- !u!4 &6700235417048873993 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2034225667066401647, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4667701650554220390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5379862344182411318 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 751570795003109200, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4667701650554220390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3854177705994584458 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8483598484501458668, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
     type: 3}
   m_PrefabInstance: {fileID: 4667701650554220390}
   m_PrefabAsset: {fileID: 0}

@@ -13,7 +13,7 @@ public class PaladinSkill_ArmorUp : BaseAttack
         ManaCost = 25f;
         DamageValue = 0f;
 
-        AOE = false;
+        AoE = false;
         RandomTargets = false;
         HaveAdditionEffects = true;
         TargetAllies = true;

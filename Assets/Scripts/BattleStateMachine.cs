@@ -74,7 +74,10 @@ public class BattleStateMachine : MonoBehaviour
             case PerformAction.PROCESSING_TURN:
                 BaseClass turnPerformer = TurnOrder[0].Attacker;
                 CharacterStateMachine FSM = turnPerformer.GetFSM();
-                FSM.Target = TurnOrder[0].Target.transform;
+                if(TurnOrder[0].IsAoE)
+                    FSM.Target = TurnOrder[0].Attacker.transform;
+                else
+                    FSM.Target = TurnOrder[0].Target.transform;
                 FSM.currentState = CharacterStateMachine.TurnState.ACTION;
                 BattleState = PerformAction.PERFORM_ACTION;
                 break;
@@ -92,7 +95,20 @@ public class BattleStateMachine : MonoBehaviour
 
     public void DamageCalculation()
     {
-        TurnOrder[0].Target.CurrentHp = TurnOrder[0].DamageValue;
+        if (TurnOrder[0].IsAoE)//&& TurnOrder[0].AoeTarget != null)
+        {
+            TurnOrder[0].Attacker.GetFSM().Target = TurnOrder[0].Attacker.transform;
+            for (int i = 0; i < TurnOrder[0].AoeTargetSkill.Count; i++)
+            {
+            Debug.Log("cugfh");
+
+                TurnOrder[0].Target = TurnOrder[0].AoeTargetSkill[i];//.CurrentHp = TurnOrder[0].DamageValue;
+                TurnOrder[0].Target.CurrentHp = TurnOrder[0].DamageValue;
+
+            }
+        }
+        else
+            TurnOrder[0].Target.CurrentHp = TurnOrder[0].DamageValue;
     }
     public void ApplyAdditionEffects()
     {

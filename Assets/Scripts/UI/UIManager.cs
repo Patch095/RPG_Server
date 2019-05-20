@@ -179,8 +179,8 @@ public class UIManager : MonoBehaviour
     {
         Spell.TurnInfo = playerChoise;
         playerChoise.chosenAttack = Spell;
-        if (playerChoise.IsAoE)//isRandom
-            AoETargetSelection();//randomTarget
+        if (playerChoise.IsAoE)
+            AoETargetSelection();
         else
         {
             //check team e target
@@ -195,9 +195,8 @@ public class UIManager : MonoBehaviour
     }
     void AoETargetSelection()
     {
-        //if (playerChoise.chosen.aoe)
-        //playerChoise.chosen.selectAOEtarget() metodo della spell
-        //PlayerInput = GUIState.DONE;
+        
+        PlayerInput = GUIState.DONE;
     }
 
     public void TargetSelection(BaseClass choosenTarget)

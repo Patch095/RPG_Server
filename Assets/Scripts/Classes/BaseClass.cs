@@ -28,7 +28,7 @@ abstract public class BaseClass : MonoBehaviour
 
     public string TeamTag; //redTeam - blueTeam
 
-    private CharacterStateMachine FSM;
+    protected CharacterStateMachine FSM;
     public CharacterStateMachine GetFSM()
     {
         return FSM;

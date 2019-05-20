@@ -10,7 +10,6 @@ public class Turn
 
     public BaseClass Attacker;
     public BaseClass Target;
-
     private float damageValue;
     public float DamageValue
     {
@@ -58,8 +57,31 @@ public class Turn
 
     public BaseAttack chosenAttack;
 
-    public bool IsAoE;
-    public bool HaveRandomTargets;
+    public bool IsAoE
+    {
+        get
+        {
+            if (chosenAttack == null)
+                return false;
+            else
+                return chosenAttack.AoE;
+        }
+    }
+    public List<BaseClass> AoeTargetSkill
+    {
+        get
+        {
+            if(chosenAttack.AoE)
+            {
+                return chosenAttack.AoeTarget;
+            }
+            else
+            {
+                return null; 
+            }
+        }
+        
+    }
     public bool HaveAdditionEffects
     {
         get
