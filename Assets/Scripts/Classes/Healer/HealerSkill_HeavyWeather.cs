@@ -13,8 +13,7 @@ public class HealerSkill_HeavyWeather : BaseAttack
         ManaCost = 15f;
         DamageValue = 5f;
 
-        AOE = true;
-        RandomTargets = false;
+        AoE = true;
         HaveAdditionEffects = true;
         TargetAllies = false;
 

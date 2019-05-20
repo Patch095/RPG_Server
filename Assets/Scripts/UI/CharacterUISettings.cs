@@ -46,6 +46,7 @@ public class CharacterUISettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Bar Setting
         float hpFillGauge = Owner.CurrentHp / Owner.MaxHp;
         HPvalues.text = Owner.CurrentHp + " / " + Owner.MaxHp;
         HPBar.transform.localScale = new Vector3(Mathf.Clamp01(hpFillGauge), 1f, 1f);
@@ -55,7 +56,13 @@ public class CharacterUISettings : MonoBehaviour
             HPBar.color = Color.red;
         else
             HPBar.color = Color.yellow;
+        //Text Setting
+        if (hpFillGauge <= 0.45f)
+            HPvalues.color = Color.white;
+        else
+            HPvalues.color = Color.black;
 
+        //Bar Setting
         float mpFillGauge = Owner.CurrentMp / Owner.MaxMp;
         MPvalues.text = Owner.CurrentMp + " / " + Owner.MaxMp;
         MPBar.transform.localScale = new Vector3(Mathf.Clamp01(mpFillGauge), 1f, 1f);
@@ -65,5 +72,10 @@ public class CharacterUISettings : MonoBehaviour
             MPBar.color = Color.grey;
         else
             MPBar.color = Color.magenta;
+        //Text Setting
+        if (mpFillGauge <= 0.45f)
+            MPvalues.color = Color.white;
+        else
+            MPvalues.color = Color.black;
     }
 }

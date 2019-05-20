@@ -15,8 +15,7 @@ public class PaladinSkill_SacredSmite : BaseAttack
         ManaCost = 40f;
         DamageValue = 10f;
 
-        AOE = false;
-        RandomTargets = false;
+        AoE = false;
         HaveAdditionEffects = true;
         TargetAllies = false;
 

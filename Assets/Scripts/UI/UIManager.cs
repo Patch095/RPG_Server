@@ -165,7 +165,7 @@ public class UIManager : MonoBehaviour
             Button button = skillButton.GetComponent<Button>();
             Text text = skillButton.GetComponentInChildren<Text>();
             text.text = currentSkill.AttackName;
-            button.interactable = attackerClass.CurrentMp > currentSkill.ManaCost;
+            button.interactable = attackerClass.CurrentMp >= currentSkill.ManaCost;
             skillButton.GetComponent<SpellSelection>().UImanager = this;
             skillButton.GetComponent<SpellSelection>().Spell = currentSkill;
             skillButton.GetComponent<SpellSelection>().SelectedSpellMenu = BlueTeamSelectedSpellInfo;
@@ -179,8 +179,8 @@ public class UIManager : MonoBehaviour
     {
         Spell.TurnInfo = playerChoise;
         playerChoise.chosenAttack = Spell;
-        if (playerChoise.IsAoE)//isRandom
-            AoETargetSelection();//randomTarget
+        if (playerChoise.IsAoE)
+            AoETargetSelection();
         else
         {
             //check team e target
