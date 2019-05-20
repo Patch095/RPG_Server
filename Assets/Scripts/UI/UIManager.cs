@@ -17,7 +17,8 @@ public class UIManager : MonoBehaviour
         ATTACK,
         MAGIC,
         TARGET_SELECTION,
-        DONE
+        DONE,
+        CANCEL
     }
     public GUIState PlayerInput;
 
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
     public GameObject BlueTeamCommandMenu;
     public Transform BlueTeamSpellsMenu;
     public Transform BlueTeamSelectedSpellInfo;
+    public GameObject CancelButtonBlueTeam;
 
     //Red Team UI
 
@@ -98,7 +100,7 @@ public class UIManager : MonoBehaviour
         switch (PlayerInput)
         {
             case GUIState.ACTIVATED:
-                if(BSM.CharactersToManage.Count > 0)
+                if (BSM.CharactersToManage.Count > 0)
                 {
                     BSM.CharactersToManage[0].OnSelection(true);
                     playerChoise = BSM.TurnOrder[0];
@@ -126,13 +128,18 @@ public class UIManager : MonoBehaviour
             case GUIState.DONE:
                 PlayerInputDone();
                 break;
+
+            case GUIState.CANCEL:
+                CancelInput();
+                break;
+
         }
 
-        foreach(KeyValuePair<TargetSelectButton, Button> keyValue in BlueTeamTarges)
+        foreach (KeyValuePair<TargetSelectButton, Button> keyValue in BlueTeamTarges)
         {
             TargetSelectButton key = keyValue.Key;
             Button value = keyValue.Value;
-            if(BSM.BattleState == BattleStateMachine.PerformAction.PERFORM_ACTION)
+            if (BSM.BattleState == BattleStateMachine.PerformAction.PERFORM_ACTION)
                 value.interactable = false;
             else
                 value.interactable = key.Target.IsAlive;
@@ -140,6 +147,20 @@ public class UIManager : MonoBehaviour
             Text buttonText = value.GetComponentInChildren<Text>();
             buttonText.text = key.Target.Name + "\n" + key.Target.CurrentHp + "/" + key.Target.MaxHp;
         }
+
+        CancelButtonBlueTeam.SetActive(BlueTeamAllyTargetsMenu.gameObject.activeInHierarchy || BlueTeamEnemyTargetsMenu.gameObject.activeInHierarchy);
+    }
+
+    public void CancelInput()
+    {
+        PlayerInput = GUIState.ACTIVATED;
+        BlueTeamCommandMenu.SetActive(false);
+        BlueTeamAllyTargetsMenu.gameObject.SetActive(false);
+        BlueTeamEnemyTargetsMenu.gameObject.SetActive(false);
+        BlueTeamSpellsMenu.gameObject.SetActive(false);
+        BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
+        playerChoise.chosenAttack = null;
+
     }
 
     public void AttackInput()
@@ -186,7 +207,7 @@ public class UIManager : MonoBehaviour
             //check team e target
             if (BSM.CharactersToManage[0].tag == "BlueTeam")
             {
-                if(playerChoise.TargetAlly)
+                if (playerChoise.TargetAlly)
                     BlueTeamAllyTargetsMenu.gameObject.SetActive(true);
                 else
                     BlueTeamEnemyTargetsMenu.gameObject.SetActive(true);
