@@ -9,9 +9,9 @@ public class MageSkill_FireBall : BaseAttack
     {
         AoeTarget = new List<BaseClass>();
         AttackName = "Fire Ball";
-        AttackDescription = "Attack a single Target, damage scales with your current HP";
+        AttackDescription = "Attack a single Target, damage scales with your current MP";
         DamageValue = 20f;
         ManaCost = 15f;
-        AoE = true;
+        AoE = false;
     }
 }
