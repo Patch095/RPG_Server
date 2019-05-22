@@ -15,6 +15,7 @@ abstract public class BaseClass : MonoBehaviour
     {
         currentHp -= damage;
         currentHp = Mathf.Clamp(currentHp, 0, MaxHp);
+        currentHp = (int)currentHp;
         if (!IsAlive)
             FSM.currentState = CharacterStateMachine.TurnState.DEAD;
     }

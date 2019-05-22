@@ -144,7 +144,7 @@ public class UIManager : MonoBehaviour
                 value.interactable = key.Target.IsAlive;
 
             Text buttonText = value.GetComponentInChildren<Text>();
-            buttonText.text = key.Target.Name + "\n" + key.Target.CurrentHp + "/" + key.Target.MaxHp;
+            buttonText.text = key.Target.Name + "\n" + (int) key.Target.CurrentHp + "/" + key.Target.MaxHp;
         }
 
         CancelButtonBlueTeam.SetActive(BlueTeamAllyTargetsMenu.gameObject.activeInHierarchy || BlueTeamEnemyTargetsMenu.gameObject.activeInHierarchy);
@@ -234,6 +234,7 @@ public class UIManager : MonoBehaviour
             BlueTeamEnemyTargetsMenu.gameObject.SetActive(false);
         }
         BlueTeamSpellsMenu.gameObject.SetActive(false);
+        BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
         BlueTeamCommandMenu.gameObject.SetActive(false);
         BSM.CharactersToManage[0].OnSelection(false);
         BSM.CharactersToManage.RemoveAt(0);
