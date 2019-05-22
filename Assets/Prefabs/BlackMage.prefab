@@ -1917,6 +1917,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 0}
+--- !u!114 &816849895035029413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309263408167686744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae3f4fcdf4576940844bfb419fb13c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    actionType: 0
+    chosenAttack: {fileID: 0}
+  TargetAllies: 0
 --- !u!114 &2610935327002452034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1975,6 +2002,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25a8eb7be0982e44cb48363b0e9de857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    actionType: 0
+    chosenAttack: {fileID: 0}
+  TargetAllies: 0
+--- !u!114 &9047797274238678606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309263408167686744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9f433fef67da94fb1a0bd792166bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityType: 0

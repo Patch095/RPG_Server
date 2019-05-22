@@ -215,7 +215,6 @@ public class UIManager : MonoBehaviour
     }
     void AoETargetSelection()
     {
-        
         PlayerInput = GUIState.DONE;
     }
 
