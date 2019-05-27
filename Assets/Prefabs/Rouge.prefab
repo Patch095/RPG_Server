@@ -12,6 +12,127 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbc632d76cfe87478040e9be3807276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
+  ClassName: 
+  MaxHp: 0
+  MaxMp: 0
+  CurrentMp: 0
+  BaseAtk: 0
+  Speed: 0
+  TeamTag: 
+  ClassSpells: []
+--- !u!114 &3140780973272946695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760874928637471523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e499bb7e136d9841977281d22462c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    actionType: 0
+    chosenAttack: {fileID: 0}
+  TargetAllies: 0
+  ownerRouge: {fileID: 0}
+--- !u!114 &5403661720794914804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760874928637471523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccb88dc0be7aaf469337f3757f1ed34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    actionType: 0
+    chosenAttack: {fileID: 0}
+  TargetAllies: 0
+  ownerRougeLeech: {fileID: 0}
+--- !u!114 &7025268694520830319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760874928637471523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2896ee3071b91ad4bbeda440769490d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    actionType: 0
+    chosenAttack: {fileID: 0}
+  TargetAllies: 0
+  ownerRougeDaggersThrow: {fileID: 0}
+--- !u!114 &2313653227191891649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760874928637471523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4e3e2cf0a47354a97efbbf4ad14a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    Attacker: {fileID: 0}
+    Target: {fileID: 0}
+    actionType: 0
+    chosenAttack: {fileID: 0}
+  TargetAllies: 0
+  ownerRougePlayingDirty: {fileID: 0}
 --- !u!1001 &4719413352461647209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93,6 +214,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rouge
       objectReference: {fileID: 0}
+    - target: {fileID: 5458253426045889210, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: Blue
+      value: 
+      objectReference: {fileID: 5912460883339069773}
+    - target: {fileID: 5458253426045889210, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: Red
+      value: 
+      objectReference: {fileID: 3303550448923244785}
     - target: {fileID: 2034225667066401647, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -159,6 +290,18 @@ GameObject:
 --- !u!4 &4924790687441814898 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2034225667066401647, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6369033799411865117}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5912460883339069773 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 751570795003109200, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6369033799411865117}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3303550448923244785 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8483598484501458668, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
     type: 3}
   m_PrefabInstance: {fileID: 6369033799411865117}
   m_PrefabAsset: {fileID: 0}

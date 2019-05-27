@@ -19,7 +19,7 @@ public class MageClass : BaseClass
         MaxHp = 120;
         MaxMp = 250;
         BaseAtk = 5;
-        Speed = 2.5f;
+        Speed = 1.5f;
     }
 
     // Start is called before the first frame update
