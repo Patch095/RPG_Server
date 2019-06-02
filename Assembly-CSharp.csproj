@@ -75,13 +75,16 @@
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_SacredSmite.cs" />
     <Compile Include="Assets\Scripts\Classes\Paladin\PaladinSkill_ShieldSlam.cs" />
     <Compile Include="Assets\Scripts\Classes\RougeClass.cs" />
-    <Compile Include="Assets\Scripts\OnGameStar.cs" />
+    <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Packet.cs" />
+    <Compile Include="Assets\Scripts\Networking\StartingMenu.cs" />
     <Compile Include="Assets\Scripts\Turn.cs" />
     <Compile Include="Assets\Scripts\UI\CharacterUISettings.cs" />
     <Compile Include="Assets\Scripts\UI\SpellSelection.cs" />
     <Compile Include="Assets\Scripts\UI\TargetSelectButton.cs" />
     <Compile Include="Assets\Scripts\UI\TeamColorBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Test\TestSpawn\TestSpawn.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

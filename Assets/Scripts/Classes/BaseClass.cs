@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 abstract public class BaseClass : MonoBehaviour
 {
-    public string Name;
+    public string CharacterName;
     public string ClassName;
 
     public float MaxHp;
@@ -34,6 +34,13 @@ abstract public class BaseClass : MonoBehaviour
         return FSM;
     }
 
+    private uint serverID;
+    public uint ServerID { get { return serverID; } }
+    public void SetID(uint id)
+    {
+        serverID = id;
+    }
+
     void OnEnable()
     {
         ClassInit("Default");
@@ -41,7 +48,10 @@ abstract public class BaseClass : MonoBehaviour
         FSM.owner = this;
         OnBattleStart();
     }
+    private void Start()
+    {
 
+    }
     protected abstract void ClassInit(string name);
     protected void OnBattleStart()
     {

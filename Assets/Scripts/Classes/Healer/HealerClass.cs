@@ -9,9 +9,9 @@ public class HealerClass : BaseClass
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            Name = name + "_Cleric";
+            CharacterName = name + "_Cleric";
         else
-            Name = name;
+            CharacterName = name;
 
         ClassName = "Cleric";
         MaxHp = 160;

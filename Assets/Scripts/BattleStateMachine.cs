@@ -4,6 +4,13 @@ using UnityEngine;
 public class BattleStateMachine : MonoBehaviour
 {
     UIManager UI;
+    private bool uiActivated;
+
+    private GameClient client;
+    public void SetClient(GameClient serverClient)
+    {
+        client = serverClient;
+    }
 
     public enum PerformAction
     {
@@ -22,10 +29,13 @@ public class BattleStateMachine : MonoBehaviour
     private Turn selectedAction;
 
     public List<CharacterStateMachine> CharactersToManage;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        UI = GetComponent<UIManager>();
+        //UI = GetComponent<UIManager>();
+        UI = GetComponentInChildren<UIManager>();
+        uiActivated = false;
 
         TurnOrder = new List<Turn>();
         CharactersToManage = new List<CharacterStateMachine>();
@@ -36,12 +46,20 @@ public class BattleStateMachine : MonoBehaviour
         BattleState = PerformAction.IDLE;
     }
 
+    public void ActiveUI()
+    {
+        UI.SetUI();
+    }
+
     public void AddToTeamList(BaseClass player)
     {
         if (player.CompareTag("BlueTeam"))
             BlueTeamInBattle.Add(player);
         else if (player.CompareTag("RedTeam"))
             RedTeamInBattle.Add(player);
+
+        if (BlueTeamInBattle.Count >= 4 && RedTeamInBattle.Count >= 4)
+            client.StartUI();
     }
     public void OnCharacterDeath(BaseClass deadCharacter)
     {
@@ -67,8 +85,34 @@ public class BattleStateMachine : MonoBehaviour
         switch (BattleState)
         {
             case PerformAction.IDLE:
-                if (TurnOrder.Count > 0)
-                    BattleState = PerformAction.PROCESSING_TURN;
+                //if (TurnOrder.Count > 0)
+                //    BattleState = PerformAction.PROCESSING_TURN;
+                break;
+
+            case PerformAction.PROCESSING_TURN:
+                //if (TurnOrder[0].IsReady)
+                //{
+                    BaseClass turnPerformer = TurnOrder[0].Attacker;
+                    CharacterStateMachine FSM = turnPerformer.GetFSM();
+                    if (TurnOrder[0].IsAoE || TurnOrder[0].actionType == Turn.AnimationType.RANGED)
+                        FSM.Target = TurnOrder[0].Attacker.transform;
+                    else
+                        FSM.Target = TurnOrder[0].Target.transform;
+                    FSM.currentState = CharacterStateMachine.TurnState.ACTION;
+                    BattleState = PerformAction.PERFORM_ACTION;
+                //}
+                break;
+
+            case PerformAction.PERFORM_ACTION:
+                // waiting for player animation and calculate damage
+                break;
+        }
+        /*
+        switch (BattleState)
+        {
+            case PerformAction.IDLE:
+                //if (TurnOrder.Count > 0)
+                //    BattleState = PerformAction.PROCESSING_TURN;
                 break;
 
             case PerformAction.PROCESSING_TURN:
@@ -77,12 +121,27 @@ public class BattleStateMachine : MonoBehaviour
                 FSM.Target = TurnOrder[0].Target.transform;
                 FSM.currentState = CharacterStateMachine.TurnState.ACTION;
                 BattleState = PerformAction.PERFORM_ACTION;
+
                 break;
 
             case PerformAction.PERFORM_ACTION:
                 // waiting for player animation and calculate damage
+
+                //BaseClass turnPerformer = TurnOrder[0].Attacker;
+                //CharacterStateMachine FSM = turnPerformer.GetFSM();
+                //FSM.Target = TurnOrder[0].Target.transform;
+                //FSM.currentState = CharacterStateMachine.TurnState.ACTION;
+                //BattleState = PerformAction.PERFORM_ACTION;
+
                 break;
         }
+        */
+    }
+
+    public void ProcesessingTurn()
+    {
+        if (TurnOrder.Count > 0)
+            BattleState = PerformAction.PROCESSING_TURN;
     }
 
     public void ReceiveAction(Turn newTurn)

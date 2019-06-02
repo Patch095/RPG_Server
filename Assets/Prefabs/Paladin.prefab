@@ -599,8 +599,7 @@ MonoBehaviour:
   AttackDescription: 
   ManaCost: 0
   DamageValue: 0
-  AOE: 0
-  RandomTargets: 0
+  AoE: 0
   HaveAdditionEffects: 0
   TurnInfo:
     Attacker: {fileID: 0}
@@ -608,7 +607,6 @@ MonoBehaviour:
     actionType: 0
     chosenAttack: {fileID: 0}
     IsAoE: 0
-    HaveRandomTargets: 0
   TargetAllies: 0
   owner: {fileID: 0}
 --- !u!114 &1750970541756076555
@@ -628,8 +626,7 @@ MonoBehaviour:
   AttackDescription: 
   ManaCost: 0
   DamageValue: 0
-  AOE: 0
-  RandomTargets: 0
+  AoE: 0
   HaveAdditionEffects: 0
   TurnInfo:
     Attacker: {fileID: 0}
@@ -637,7 +634,6 @@ MonoBehaviour:
     actionType: 0
     chosenAttack: {fileID: 0}
     IsAoE: 0
-    HaveRandomTargets: 0
   TargetAllies: 0
 --- !u!114 &2141251390637192132
 MonoBehaviour:
@@ -656,8 +652,7 @@ MonoBehaviour:
   AttackDescription: 
   ManaCost: 0
   DamageValue: 0
-  AOE: 0
-  RandomTargets: 0
+  AoE: 0
   HaveAdditionEffects: 0
   TurnInfo:
     Attacker: {fileID: 0}
@@ -665,7 +660,6 @@ MonoBehaviour:
     actionType: 0
     chosenAttack: {fileID: 0}
     IsAoE: 0
-    HaveRandomTargets: 0
   TargetAllies: 0
 --- !u!114 &6488933891618459967
 MonoBehaviour:
@@ -679,7 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef5458158917e9409159a508c7c4503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
+  CharacterName: 
   ClassName: 
   MaxHp: 0
   MaxMp: 0
@@ -705,8 +699,7 @@ MonoBehaviour:
   AttackDescription: 
   ManaCost: 0
   DamageValue: 0
-  AOE: 0
-  RandomTargets: 0
+  AoE: 0
   HaveAdditionEffects: 0
   TurnInfo:
     Attacker: {fileID: 0}
@@ -714,8 +707,8 @@ MonoBehaviour:
     actionType: 0
     chosenAttack: {fileID: 0}
     IsAoE: 0
-    HaveRandomTargets: 0
   TargetAllies: 0
+  owner: {fileID: 0}
 --- !u!1 &8556653367992154714
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +751,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Paladin
+      objectReference: {fileID: 0}
+    - target: {fileID: 5975275916526976318, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2034225667066401647, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
         type: 3}

@@ -93,6 +93,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rouge
       objectReference: {fileID: 0}
+    - target: {fileID: 5975275916526976318, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2034225667066401647, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
         type: 3}
       propertyPath: m_LocalPosition.x

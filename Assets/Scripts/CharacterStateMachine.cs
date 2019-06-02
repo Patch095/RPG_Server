@@ -62,7 +62,7 @@ public class CharacterStateMachine : MonoBehaviour
 
         currentState = TurnState.PROCESSING_TURN;
 
-        BSM.AddToTeamList(owner);
+        //BSM.AddToTeamList(owner);
     }
 
     // Update is called once per frame
@@ -92,6 +92,7 @@ public class CharacterStateMachine : MonoBehaviour
 
             case TurnState.ACTION:
                 //can have animations, will later add a baseMoveAnimation or a ProjectielLaunchAnimation
+
                 StartCoroutine(Action());
                 break;
 
@@ -146,6 +147,7 @@ public class CharacterStateMachine : MonoBehaviour
             yield break;
 
         onAnimation = true;
+        Target = this.transform;
 
         //Animation
         if (BSM.TurnOrder[0].actionType == Turn.AnimationType.MEELE)
@@ -164,7 +166,8 @@ public class CharacterStateMachine : MonoBehaviour
         }
         else if (BSM.TurnOrder[0].actionType == Turn.AnimationType.RANGED)
         {
-
+            //creai prefab preso da rangedSkill, scale = 0
+            //prefab scale += time.deltaTime;
         }
         //animation is finished
         BSM.OnTurnEnd();
