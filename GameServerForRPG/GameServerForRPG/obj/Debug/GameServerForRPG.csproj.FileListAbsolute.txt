@@ -1,0 +1,7 @@
+C:\Users\Tommaso\source\repos\GameServerForRPG\GameServerForRPG\bin\Debug\GameServerForRPG.exe.config
+C:\Users\Tommaso\source\repos\GameServerForRPG\GameServerForRPG\bin\Debug\GameServerForRPG.exe
+C:\Users\Tommaso\source\repos\GameServerForRPG\GameServerForRPG\bin\Debug\GameServerForRPG.pdb
+C:\Users\Tommaso\source\repos\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.csprojAssemblyReference.cache
+C:\Users\Tommaso\source\repos\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.csproj.CoreCompileInputs.cache
+C:\Users\Tommaso\source\repos\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.exe
+C:\Users\Tommaso\source\repos\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.pdb
