@@ -83,7 +83,9 @@
     <Compile Include="Assets\Scripts\Classes\Rouge\RougeSkill_LeechStab.cs" />
     <Compile Include="Assets\Scripts\Classes\Rouge\RougeSkill_PlayingDirty.cs" />
     <Compile Include="Assets\Scripts\Classes\Rouge\RougeSkill_QuickSlash.cs" />
-    <Compile Include="Assets\Scripts\OnGameStar.cs" />
+    <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Packet.cs" />
+    <Compile Include="Assets\Scripts\Networking\StartingMenu.cs" />
     <Compile Include="Assets\Scripts\Turn.cs" />
     <Compile Include="Assets\Scripts\UI\CharacterUISettings.cs" />
     <Compile Include="Assets\Scripts\UI\Menù.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Assets\Scripts\UI\TargetSelectButton.cs" />
     <Compile Include="Assets\Scripts\UI\TeamColorBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Test\TestSpawn\TestSpawn.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

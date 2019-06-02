@@ -12,7 +12,10 @@ public class UIManager : MonoBehaviour
 
     public enum GUIState
     {
+        //disactive
+        //creation
         ACTIVATED,
+        PREPARATION,
         IDLE,
         ATTACK,
         MAGIC,
@@ -34,16 +37,21 @@ public class UIManager : MonoBehaviour
 
     //Red Team UI
 
+    public bool UIStarted;
+
+    private void OnEnable()
+    {
+        UIStarted = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         BSM = GetComponent<BattleStateMachine>();
 
-        BlueTeamTarges = new Dictionary<TargetSelectButton, Button>();
-
-        SetUI();
-
+        //SetUI();
         PlayerInput = GUIState.ACTIVATED;
+        BlueTeamCharactersMenu.gameObject.SetActive(false);
         BlueTeamCommandMenu.SetActive(false);
         BlueTeamAllyTargetsMenu.gameObject.SetActive(false);
         BlueTeamEnemyTargetsMenu.gameObject.SetActive(false);
@@ -51,87 +59,105 @@ public class UIManager : MonoBehaviour
         BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
     }
 
-    void SetUI()
+    public void SetUI()
     {
-        //Blue Team UI
-        //Characters
-        foreach (Transform child in BlueTeamCharactersMenu)
-            child.gameObject.SetActive(false);
-        for (int i = 0; i < BSM.BlueTeamInBattle.Count; i++)
+        if (!UIStarted)
         {
-            GameObject characterPannelInfo = BlueTeamCharactersMenu.GetChild(i).gameObject;
-            characterPannelInfo.AddComponent<CharacterUISettings>();
-            characterPannelInfo.GetComponent<CharacterUISettings>().Owner = BSM.BlueTeamInBattle[i];
-            characterPannelInfo.SetActive(true);
-        }
-        //Targets Enemy
-        foreach (Transform child in BlueTeamEnemyTargetsMenu)
-            child.gameObject.SetActive(false);
-        for (int i = 0; i < BSM.RedTeamInBattle.Count; i++)
-        {
-            GameObject button = BlueTeamEnemyTargetsMenu.GetChild(i).gameObject;
-            button.SetActive(true);
-            Text text = button.GetComponentInChildren<Text>();
-            text.text = BSM.RedTeamInBattle[i].Name;
-            TargetSelectButton targerButton = button.GetComponent<TargetSelectButton>();
-            targerButton.UImanager = this;
-            targerButton.Target = BSM.RedTeamInBattle[i];
-            BlueTeamTarges.Add(targerButton, button.GetComponent<Button>());
-        }
-        //Targets Allies
-        foreach (Transform child in BlueTeamAllyTargetsMenu)
-            child.gameObject.SetActive(false);
-        for (int i = 0; i < BSM.BlueTeamInBattle.Count; i++)
-        {
-            GameObject button = BlueTeamAllyTargetsMenu.GetChild(i).gameObject;
-            button.SetActive(true);
-            Text text = button.GetComponentInChildren<Text>();
-            text.text = BSM.BlueTeamInBattle[i].Name;
-            TargetSelectButton targerButton = button.GetComponent<TargetSelectButton>();
-            targerButton.UImanager = this;
-            targerButton.Target = BSM.BlueTeamInBattle[i];
-            BlueTeamTarges.Add(targerButton, button.GetComponent<Button>());
+            //Blue Team UI
+            //Characters
+            foreach (Transform child in BlueTeamCharactersMenu)
+                child.gameObject.SetActive(false);
+            for (int i = 0; i < BSM.BlueTeamInBattle.Count; i++)
+            {
+                GameObject characterPannelInfo = BlueTeamCharactersMenu.GetChild(i).gameObject;
+                characterPannelInfo.AddComponent<CharacterUISettings>();
+                characterPannelInfo.GetComponent<CharacterUISettings>().Owner = BSM.BlueTeamInBattle[i];
+                characterPannelInfo.SetActive(true);
+            }
+            //Targets Enemy
+            BlueTeamTarges = new Dictionary<TargetSelectButton, Button>();
+
+            foreach (Transform child in BlueTeamEnemyTargetsMenu)
+                child.gameObject.SetActive(false);
+            for (int i = 0; i < BSM.RedTeamInBattle.Count; i++)
+            {
+                GameObject button = BlueTeamEnemyTargetsMenu.GetChild(i).gameObject;
+                button.SetActive(true);
+                Text text = button.GetComponentInChildren<Text>();
+                text.text = BSM.RedTeamInBattle[i].CharacterName;
+                TargetSelectButton targerButton = button.GetComponent<TargetSelectButton>();
+                targerButton.UImanager = this;
+                targerButton.Target = BSM.RedTeamInBattle[i];
+                BlueTeamTarges.Add(targerButton, button.GetComponent<Button>());
+            }
+            //Targets Allies
+            foreach (Transform child in BlueTeamAllyTargetsMenu)
+                child.gameObject.SetActive(false);
+            for (int i = 0; i < BSM.BlueTeamInBattle.Count; i++)
+            {
+                GameObject button = BlueTeamAllyTargetsMenu.GetChild(i).gameObject;
+                button.SetActive(true);
+                Text text = button.GetComponentInChildren<Text>();
+                text.text = BSM.BlueTeamInBattle[i].CharacterName;
+                TargetSelectButton targerButton = button.GetComponent<TargetSelectButton>();
+                targerButton.UImanager = this;
+                targerButton.Target = BSM.BlueTeamInBattle[i];
+                BlueTeamTarges.Add(targerButton, button.GetComponent<Button>());
+            }
+            BlueTeamCharactersMenu.gameObject.SetActive(true);
+
+            PlayerInput = GUIState.ACTIVATED;
+
+            UIStarted = true;
         }
     }
-
     // Update is called once per frame
     void Update()
     {
-        switch (PlayerInput)
+        if (UIStarted)
         {
-            case GUIState.ACTIVATED:
-                if(BSM.CharactersToManage.Count > 0)
-                {
+            switch (PlayerInput)
+            {
+                case GUIState.ACTIVATED:
+                    if (BSM.CharactersToManage.Count > 0)
+                        PlayerInput = GUIState.PREPARATION;
+                    break;
+
+                case GUIState.PREPARATION:
                     BSM.CharactersToManage[0].OnSelection(true);
                     playerChoise = BSM.TurnOrder[0];
+                    Debug.Log(playerChoise.Attacker);
                     BlueTeamCommandMenu.SetActive(true);
                     PlayerInput = GUIState.IDLE;
-                }
-                break;
+                    break;
 
-            case GUIState.IDLE:
-                break;
+                case GUIState.IDLE:
+                    break;
 
-            case GUIState.ATTACK:
-                //Basic attack command
-                AttackInput();
-                break;
+                case GUIState.ATTACK:
+                    //Basic attack command
+                    AttackInput();
+                    break;
 
-            case GUIState.MAGIC:
-                //Magic command
-                MagicSubMenuInit();
-                break;
+                case GUIState.MAGIC:
+                    //Magic command
+                    MagicSubMenuInit();
+                    break;
 
-            case GUIState.TARGET_SELECTION:
-                break;
+                case GUIState.TARGET_SELECTION:
+                    break;
 
-            case GUIState.DONE:
-                PlayerInputDone();
-                break;
+                case GUIState.DONE:
+                    PlayerInputDone();
+                    break;
 
-            case GUIState.CANCEL:
-                CancelInput();
-                break;
+                case GUIState.CANCEL:
+                    CancelInput();
+                    break;
+
+                case GUIState.DONE:
+                    PlayerInputDone();
+                    break;
         }
 
         foreach(KeyValuePair<TargetSelectButton, Button> keyValue in BlueTeamTarges)
@@ -145,6 +171,21 @@ public class UIManager : MonoBehaviour
 
             Text buttonText = value.GetComponentInChildren<Text>();
             buttonText.text = key.Target.Name + "\n" + (int) key.Target.CurrentHp + "/" + key.Target.MaxHp;
+
+            }
+
+            foreach (KeyValuePair<TargetSelectButton, Button> keyValue in BlueTeamTarges)
+            {
+                TargetSelectButton key = keyValue.Key;
+                Button value = keyValue.Value;
+                if (BSM.BattleState == BattleStateMachine.PerformAction.PERFORM_ACTION)
+                    value.interactable = false;
+                else
+                    value.interactable = key.Target.IsAlive;
+
+                Text buttonText = value.GetComponentInChildren<Text>();
+                buttonText.text = key.Target.CharacterName + "\n" + (int)key.Target.CurrentHp + "/" + key.Target.MaxHp;
+            }
         }
 
         CancelButtonBlueTeam.SetActive(BlueTeamAllyTargetsMenu.gameObject.activeInHierarchy || BlueTeamEnemyTargetsMenu.gameObject.activeInHierarchy);
@@ -221,6 +262,7 @@ public class UIManager : MonoBehaviour
     public void TargetSelection(BaseClass choosenTarget)
     {
         playerChoise.Target = choosenTarget;
+        BSM.ProcesessingTurn();
         PlayerInput = GUIState.DONE;
     }
 
