@@ -231,18 +231,21 @@ public class UIManager : MonoBehaviour
     {
         Spell.TurnInfo = playerChoise;
         playerChoise.chosenAttack = Spell;
-        if (playerChoise.IsAoE)
-            AoETargetSelection();
-        else
+        //check team e target
+        if (BSM.CharactersToManage[0].tag == "BlueTeam")
         {
-            //check team e target
-            if (BSM.CharactersToManage[0].tag == "BlueTeam")
+            if (playerChoise.IsAoE)
             {
-                if(playerChoise.TargetAlly)
-                    BlueTeamAllyTargetsMenu.gameObject.SetActive(true);
-                else
-                    BlueTeamEnemyTargetsMenu.gameObject.SetActive(true);
+                //stuff
             }
+            else if (playerChoise.TargetAlly)
+                BlueTeamAllyTargetsMenu.gameObject.SetActive(true);
+            else
+                BlueTeamEnemyTargetsMenu.gameObject.SetActive(true);
+        }
+        else if (BSM.CharactersToManage[0].tag == "RedTeam")
+        {
+
         }
     }
     void AoETargetSelection()
