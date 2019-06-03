@@ -8,17 +8,29 @@ public class Turn
 {
     public enum AnimationType { MEELE, RANGED};
 
-    public BaseClass Attacker;
-    public BaseClass Target;
+    private BaseClass attacker;
+    public BaseClass Attacker { get { return attacker; } }
+    public void SetAttacker(BaseClass atk)
+    {
+        attacker = atk;
+    }
+
+    private BaseClass target;
+    public BaseClass Target { get { return Target; } }
+    public void SetTarget(BaseClass targ)
+    {
+        target = targ;
+    }
+
     private float damageValue;
     public float DamageValue
     {
         get
         {
-            if (chosenAttack == null)
+            if (ChosenAttack == null)
                 return damageValue;
             else
-                return chosenAttack.DamageValue;
+                return ChosenAttack.DamageValue;
         }
         set
         {
@@ -30,10 +42,10 @@ public class Turn
     {
         get
         {
-            if (chosenAttack == null)
+            if (ChosenAttack == null)
                 return 0;
             else
-                return chosenAttack.ManaCost;
+                return ChosenAttack.ManaCost;
         }
     }
 
@@ -42,38 +54,43 @@ public class Turn
     {
         get
         {
-            if (chosenAttack == null)
+            if (ChosenAttack == null)
                 return actionType;
             else
             {
-                if (chosenAttack.AbilityType == BaseAttack.ActionType.MEELE)
+                if (ChosenAttack.AbilityType == BaseAttack.ActionType.MEELE)
                     actionType = AnimationType.MEELE;
-                else if (chosenAttack.AbilityType == BaseAttack.ActionType.RANGED)
+                else if (ChosenAttack.AbilityType == BaseAttack.ActionType.RANGED)
                     actionType = AnimationType.RANGED;
             }
             return actionType;
         }
     }
 
-    public BaseAttack chosenAttack;
+    private BaseAttack chosenAttack;
+    public BaseAttack ChosenAttack { get { return chosenAttack; } }
+    public void SetChosenAttack(BaseAttack attack)
+    {
+        chosenAttack = attack;
+    }
 
     public bool IsAoE
     {
         get
         {
-            if (chosenAttack == null)
+            if (ChosenAttack == null)
                 return false;
             else
-                return chosenAttack.AoE;
+                return ChosenAttack.AoE;
         }
     }
     public List<BaseClass> AoeTargetSkill
     {
         get
         {
-            if(chosenAttack.AoE)
+            if(ChosenAttack.AoE)
             {
-                return chosenAttack.AoeTarget;
+                return ChosenAttack.AoeTarget;
             }
             else
             {
@@ -86,10 +103,10 @@ public class Turn
     {
         get
         {
-            if (chosenAttack == null)
+            if (ChosenAttack == null)
                 return false;
             else
-                return chosenAttack.HaveAdditionEffects;
+                return ChosenAttack.HaveAdditionEffects;
         }
     }
 
@@ -97,12 +114,17 @@ public class Turn
     {
         get
         {
-            if (chosenAttack == null)
+            if (ChosenAttack == null)
                 return false;
             else
-                return chosenAttack.TargetAllies;
+                return ChosenAttack.TargetAllies;
         }
     }
 
-    public bool IsReady;
+    private bool isReady;
+    public bool IsReady { get { return isReady; } }
+    public void SetReady()
+    {
+        isReady = true;
+    }
 }

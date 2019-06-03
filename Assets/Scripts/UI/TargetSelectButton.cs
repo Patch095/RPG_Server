@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class TargetSelectButton : MonoBehaviour
 {
-    public BaseClass Target;
-    public UIManager UImanager;
-    
+    private BaseClass target;
+    public BaseClass Target { get { return target; } }
+    public void SetTarget(BaseClass newTarget)
+    {
+        target = newTarget;
+    }
+
+    UIManager UImanager;
+    public void SetUIManager(UIManager uiMng)
+    {
+        UImanager = uiMng;
+    }
+
     public void SelectTarget()
     {
         UImanager.TargetSelection(Target);

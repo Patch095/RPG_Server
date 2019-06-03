@@ -60,9 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\READ ME!!!.cs" />
     <Compile Include="Assets\Scripts\AutoRotating.cs" />
     <Compile Include="Assets\Scripts\BattleStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Camera.cs" />
     <Compile Include="Assets\Scripts\CharacterStateMachine.cs" />
     <Compile Include="Assets\Scripts\Classes\BaseAttack.cs" />
     <Compile Include="Assets\Scripts\Classes\BaseClass.cs" />
@@ -86,10 +86,9 @@
     <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
     <Compile Include="Assets\Scripts\Networking\Packet.cs" />
     <Compile Include="Assets\Scripts\Networking\StartingMenu.cs" />
+    <Compile Include="Assets\Scripts\TargetTeam.cs" />
     <Compile Include="Assets\Scripts\Turn.cs" />
     <Compile Include="Assets\Scripts\UI\CharacterUISettings.cs" />
-    <Compile Include="Assets\Scripts\UI\Menù.cs" />
-    <Compile Include="Assets\Scripts\UI\OptionCharacter.cs" />
     <Compile Include="Assets\Scripts\UI\SpellSelection.cs" />
     <Compile Include="Assets\Scripts\UI\TargetSelectButton.cs" />
     <Compile Include="Assets\Scripts\UI\TeamColorBase.cs" />
@@ -99,11 +98,9 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\Necromancer GUI\Kingthings.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\Necromancer GUI\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />

@@ -138,7 +138,7 @@ public class GameClient : MonoBehaviour
         BaseClass hero = obj.GetComponent<BaseClass>();
 
         Turn newTurn = new Turn();
-        newTurn.Attacker = hero;
+        newTurn.SetAttacker(hero);
         bsm.ReceiveAction(newTurn);
         Debug.Log("Add a new Turn");
     }

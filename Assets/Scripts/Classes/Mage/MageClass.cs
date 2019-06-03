@@ -55,7 +55,7 @@ public class MageClass : BaseClass
         else if (TeamTag == "RedTeam")
         {
             blizzard.AoeTarget = FSM.BSM.BlueTeamInBattle;
-            thunder_Storm.AoeTarget = FSM.BSM.BlueTeamInBattle;
+            thunderStorm.AoeTarget = FSM.BSM.BlueTeamInBattle;
         }
     }
 }

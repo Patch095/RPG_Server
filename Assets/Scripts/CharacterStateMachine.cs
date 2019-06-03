@@ -65,8 +65,6 @@ public class CharacterStateMachine : MonoBehaviour
         isSelected = false;
 
         currentState = TurnState.PROCESSING_TURN;
-
-        //BSM.AddToTeamList(owner);
     }
 
     // Update is called once per frame
@@ -140,10 +138,8 @@ public class CharacterStateMachine : MonoBehaviour
 
     void ChooseAction()
     {
-        Turn action = new Turn
-        {
-            Attacker = owner
-        };
+        Turn action = new Turn();
+        action.SetAttacker(owner);
 
         BSM.ReceiveAction(action);
     }

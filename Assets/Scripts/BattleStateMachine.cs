@@ -33,7 +33,7 @@ public class BattleStateMachine : MonoBehaviour
     public List<BaseClass> DeathCharacters { get { return deathCharacters; } }
 
     public List<Turn> TurnOrder;
-    public bool TurnOrderContatins(BaseClass hero)
+    public bool TurnOrderContatinsHero(BaseClass hero)
     {
         foreach(Turn turn in TurnOrder)
         {
@@ -66,6 +66,7 @@ public class BattleStateMachine : MonoBehaviour
     public void ActiveUI()
     {
         UI.SetUIBlueTeam();
+        UI.SetUIRedTeam();
     }
 
     public void AddToTeamList(BaseClass player)
@@ -181,7 +182,7 @@ public class BattleStateMachine : MonoBehaviour
             TurnOrder[0].Attacker.GetFSM().Target = TurnOrder[0].Attacker.transform;
             for (int i = 0; i < TurnOrder[0].AoeTargetSkill.Count; i++)
             {
-                TurnOrder[0].Target = TurnOrder[0].AoeTargetSkill[i];//.CurrentHp = TurnOrder[0].DamageValue;
+                TurnOrder[0].SetTarget(TurnOrder[0].AoeTargetSkill[i]);//.CurrentHp = TurnOrder[0].DamageValue;
                 TurnOrder[0].Target.CurrentHp = TurnOrder[0].DamageValue;
             }
         }
@@ -191,7 +192,7 @@ public class BattleStateMachine : MonoBehaviour
     public void ApplyAdditionEffects()
     {
         if (TurnOrder[0].HaveAdditionEffects)
-            TurnOrder[0].chosenAttack.AdditionalEffect();
+            TurnOrder[0].ChosenAttack.AdditionalEffect();
     }
     public void OnTurnEnd()
     {
