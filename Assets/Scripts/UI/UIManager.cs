@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     BattleStateMachine BSM;
 
     private Turn playerChoise;
+    private bool sendInput;
 
     public enum GUIState
     {
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
         ATTACK,
         MAGIC,
         TARGET_SELECTION,
+        PLAYER_INPUT_DONE,
         DONE,
         CANCEL
     }
@@ -48,6 +50,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         BSM = GetComponent<BattleStateMachine>();
+
+        sendInput = false;
 
         //SetUI();
         PlayerInput = GUIState.ACTIVATED;
@@ -145,15 +149,17 @@ public class UIManager : MonoBehaviour
                     break;
 
                 case GUIState.TARGET_SELECTION:
-                    break;
-
-                case GUIState.DONE:
-                    PlayerInputDone();
+                    if (!sendInput)
+                    {
+                        SendTurnParameters();
+                    }
                     break;
 
                 case GUIState.CANCEL:
                     CancelInput();
                     break;
+
+                case GUIState.PLAYER_INPUT_DONE:
 
                 case GUIState.DONE:
                     PlayerInputDone();
@@ -170,21 +176,7 @@ public class UIManager : MonoBehaviour
                 value.interactable = key.Target.IsAlive;
 
             Text buttonText = value.GetComponentInChildren<Text>();
-            buttonText.text = key.Target.Name + "\n" + (int) key.Target.CurrentHp + "/" + key.Target.MaxHp;
-
-            }
-
-            foreach (KeyValuePair<TargetSelectButton, Button> keyValue in BlueTeamTarges)
-            {
-                TargetSelectButton key = keyValue.Key;
-                Button value = keyValue.Value;
-                if (BSM.BattleState == BattleStateMachine.PerformAction.PERFORM_ACTION)
-                    value.interactable = false;
-                else
-                    value.interactable = key.Target.IsAlive;
-
-                Text buttonText = value.GetComponentInChildren<Text>();
-                buttonText.text = key.Target.CharacterName + "\n" + (int)key.Target.CurrentHp + "/" + key.Target.MaxHp;
+            buttonText.text = key.Target.CharacterName + "\n" + (int) key.Target.CurrentHp + "/" + key.Target.MaxHp;
             }
         }
 
@@ -210,7 +202,6 @@ public class UIManager : MonoBehaviour
         BlueTeamSpellsMenu.gameObject.SetActive(false);
         BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
         playerChoise.chosenAttack = null;
-
     }
 
     public void MagicSubMenuInit()
@@ -259,6 +250,15 @@ public class UIManager : MonoBehaviour
         PlayerInput = GUIState.DONE;
     }
 
+    void SendTurnParameters()
+    {
+        BaseAttack atk = playerChoise.chosenAttack;
+        BaseClass target = playerChoise.Target;
+
+        BSM.SetTurnParameters();
+        sendInput = true;
+    }
+
     public void TargetSelection(BaseClass choosenTarget)
     {
         playerChoise.Target = choosenTarget;
@@ -282,3 +282,8 @@ public class UIManager : MonoBehaviour
         PlayerInput = GUIState.ACTIVATED;
     }
 }
+
+//inputDone -> state IDone....
+
+    // state sendDonePacket
+    //metodo done() {state = DONE}

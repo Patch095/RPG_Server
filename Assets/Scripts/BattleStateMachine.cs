@@ -25,6 +25,15 @@ public class BattleStateMachine : MonoBehaviour
     public List<BaseClass> DeathCharacters;
 
     public List<Turn> TurnOrder;
+    public bool TurnOrderContatinsHero(BaseClass hero)
+    {
+        foreach(Turn turn in TurnOrder)
+        {
+            if (turn.Attacker == hero)
+                return true;
+        }
+        return false;
+    }
 
     private Turn selectedAction;
 
@@ -180,5 +189,10 @@ public class BattleStateMachine : MonoBehaviour
         BattleState = PerformAction.IDLE;
 
         UI.PlayerInput = UIManager.GUIState.ACTIVATED;
+    }
+
+    public void SetTurnParameters()
+    {
+        client.SetTurnParameters();
     }
 }

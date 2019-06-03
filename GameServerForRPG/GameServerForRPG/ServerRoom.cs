@@ -117,6 +117,16 @@ namespace GameServerForRPG
             }
         }
 
+        private GameLogicFST gameLogic;
+        public void AddNewTurn(RPGHero attacker)
+        {
+            gameLogic.AddTurn(attacker);
+        }
+        public void SetTurnParameters(RPGHero attacker, int skillId = -1, RPGHero target = null)
+        {
+            gameLogic.TurnSettings(attacker, skillId, target);
+        }
+
         public ServerRoom(uint id, GameServer gameServer)
         {
             roomID = id;
@@ -124,6 +134,8 @@ namespace GameServerForRPG
 
             clientsTable = new List<GameClient>(ROOM_SIZE);
             gameObjectsTable = new Dictionary<uint, GameObject>();
+
+            gameLogic = new GameLogicFST(1, server);
 
             gameStarted = false;
             spawnTeam = false;
@@ -141,8 +153,22 @@ namespace GameServerForRPG
                 if (Player1.IsReady && Player2.IsReady && !gameStarted)
                     server.GameStart(this);
 
-            if (gameStarted && !spawnTeam && gameObjectsTable.Count >= 10)
+            if (gameStarted && !spawnTeam && gameObjectsTable.Count >= 8)
                 server.SpawnHeroes(this);
+
+            if (gameLogic.TurnReadyToBeProcessed && !gameLogic.ProcessTurn)
+            {
+                uint attackerId = uint.MinValue;
+                int skillId = int.MinValue;
+                uint targetId = uint.MinValue;
+                gameLogic.GetTurnInfo(ref attackerId, ref skillId, ref targetId);
+                if (targetId == uint.MaxValue)
+                    targetId = 172;
+
+                server.ProcessingTurn(this, attackerId, skillId, targetId);
+                gameLogic.StartProcessing();
+            }
+
         }
 
 

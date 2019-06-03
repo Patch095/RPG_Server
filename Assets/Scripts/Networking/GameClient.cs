@@ -51,7 +51,6 @@ public class GameClient : MonoBehaviour
     //game logic 
     public GameObject GameLogic;
     BattleStateMachine bsm;
-    private uint battleStateMachineServerId;
     public GameObject StartingMenu;
     StartingMenu startMenu;
 
@@ -113,7 +112,7 @@ public class GameClient : MonoBehaviour
         //commandsTable[6] = UIStart;
 
         commandsTable[7] = TurnCreation;
-        commandsTable[8] = SetTurnParameter;
+        //commandsTable[8] = SetTurnParameter;
         commandsTable[9] = ProcessTurn;
 
         commandsTable[254] = StatusServer;
@@ -123,22 +122,30 @@ public class GameClient : MonoBehaviour
 
     private void ProcessTurn(byte[] data, EndPoint sender)
     {
-        //Server make you process the complete turn
-        throw new NotImplementedException();
+
+        //172 = target Null     -1 = skill null
     }
-    private void SetTurnParameter(byte[] data, EndPoint sender)
+
+    public void SetTurnParameters()
     {
-        //add skill/target to your turn 
-        throw new NotImplementedException();
+
     }
+
     private void TurnCreation(byte[] data, EndPoint sender)
     {
-        //Server add a turn to your local turnList
-        throw new NotImplementedException();
+        uint heroId = BitConverter.ToUInt32(data, 1);
+        GameObject obj = spawnedGameObjects[heroId];
+        BaseClass hero = obj.GetComponent<BaseClass>();
+
+        Turn newTurn = new Turn();
+        newTurn.Attacker = hero;
+        bsm.ReceiveAction(newTurn);
+        Debug.Log("Add a new Turn");
     }
-    public void CharacterATBReadt(BaseClass characterReady)
+    public void CharacterATBReady(BaseClass characterReady)
     {
-        Packet createTurnPacket = new Packet(7);
+        Packet createTurnPacket = new Packet(7, myIdOnServer, serverRoomId, characterReady.ServerID);
+        socket.SendTo(createTurnPacket.GetData(), endPoint);
     }
 
     public void LogIn()//call [0]Join
@@ -152,13 +159,10 @@ public class GameClient : MonoBehaviour
 
         serverRoomId = BitConverter.ToUInt32(data, 5);
 
-        battleStateMachineServerId = BitConverter.ToUInt32(data, 9);
-        spawnedGameObjects.Add(battleStateMachineServerId, bsm.gameObject);
-
         byte[] teamTag = new byte[8];
         for(int i = 0; i < teamTag.Length; i++)
         {
-            teamTag[i] = data[14 + i];
+            teamTag[i] = data[10 + i];
         }
         string tag = System.Text.Encoding.UTF8.GetString(teamTag);
         if (tag[tag.Length - 1] == '\0')
@@ -173,7 +177,6 @@ public class GameClient : MonoBehaviour
         clientHaveLoggedIn = true;
         
         Debug.Log(serverRoomId);
-        Debug.Log("Object Spawned : " + spawnedGameObjects.Count + ";    bst ID : " + battleStateMachineServerId);
         Debug.Log(clientTeamTag);
     }
     private void Spawn(byte[] data, EndPoint sender)
@@ -217,6 +220,7 @@ public class GameClient : MonoBehaviour
             objectClass.TeamTag = teamTag;
             // newGameObject.GetComponent<BaseClass>().CharacterName = inGameName;
             newGameObject.GetComponent<CharacterStateMachine>().BSM = bsm;
+            newGameObject.GetComponent<CharacterStateMachine>().SetServer(this);
 
             newGameObject.SetActive(true);
             bsm.AddToTeamList(objectClass);
@@ -271,9 +275,9 @@ public class GameClient : MonoBehaviour
 
     public void StartUI()
     {
-        startMenu.SetCamera(clientTeamTag);
-
         bsm.ActiveUI();
+
+        startMenu.SetCamera(clientTeamTag);
 
         StartingMenu.SetActive(false);
 

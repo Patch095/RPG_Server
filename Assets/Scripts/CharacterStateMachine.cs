@@ -7,7 +7,11 @@ using System.Collections;
 public class CharacterStateMachine : MonoBehaviour
 {
     public BattleStateMachine BSM;
-
+    private GameClient client;
+    public void SetServer(GameClient serverClient)
+    {
+        client = serverClient;
+    }
     public BaseClass owner;
 
     // this is the target on the character avatar, it will appeare when seleceted
@@ -80,19 +84,22 @@ public class CharacterStateMachine : MonoBehaviour
                 FillTurnMetter();
                 break;
 
-            case TurnState.BSM_PROCESSING:
-                BSM.CharactersToManage.Add(this);
-                currentState = TurnState.CHOOSE_ACTION;
+            case TurnState.CHOOSE_ACTION:
+                client.CharacterATBReady(owner);
+                //ChooseAction();
+                currentState = TurnState.BSM_PROCESSING;
                 break;
 
-            case TurnState.CHOOSE_ACTION:
-                ChooseAction();
-                currentState = TurnState.IDLE;
+            case TurnState.BSM_PROCESSING:
+                if (BSM.TurnOrderContatinsHero(owner))
+                {
+                    BSM.CharactersToManage.Add(this);
+                    currentState = TurnState.IDLE;
+                }
                 break;
 
             case TurnState.ACTION:
                 //can have animations, will later add a baseMoveAnimation or a ProjectielLaunchAnimation
-
                 StartCoroutine(Action());
                 break;
 
@@ -128,7 +135,7 @@ public class CharacterStateMachine : MonoBehaviour
         ATBbar.transform.localScale = new Vector3(Mathf.Clamp01(fillGauge), 1f, 1f);
 
         if(currentCooldown >= maxCooldown)
-            currentState = TurnState.BSM_PROCESSING;
+            currentState = TurnState.CHOOSE_ACTION;
     }
 
     void ChooseAction()

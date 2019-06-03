@@ -63,6 +63,8 @@ abstract public class BaseClass : MonoBehaviour
     }
 
     public List<BaseAttack> ClassSpells;
-
-    //use Update() for calculating skill damage scaling
+    public BaseAttack GetSkillFromID(int id)
+    {
+        return ClassSpells[id];
+    }
 }

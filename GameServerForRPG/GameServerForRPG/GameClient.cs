@@ -35,17 +35,6 @@ namespace GameServerForRPG
             teamTag = tag;
         }
 
-        private GameLogicFST clientFST;
-        public void SetClientFSM(GameLogicFST FSM)
-        {
-            if (clientFST == null)
-                clientFST = FSM;
-        }
-        public GameLogicFST GetClientFST()
-        {
-            return clientFST;
-        }
-
         //indirizzo 
         private EndPoint endPoint;
         public EndPoint GetEndPoint()

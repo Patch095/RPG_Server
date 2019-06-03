@@ -7,13 +7,13 @@ public class MageClass : BaseClass
     MageSkill_FireBall fireBall;
     MageSkill_Blizzard blizzard;
     MageSkill_Arcanium arcanium;
-    MageSkill_ThunderStorm thunder_Storm;
+    MageSkill_ThunderStorm thunderStorm;
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            Name = name + "_Mage";
+            CharacterName = name + "_Mage";
         else
-            Name = name;
+            CharacterName = name;
 
         ClassName = "Mage";
         MaxHp = 120;
@@ -38,9 +38,9 @@ public class MageClass : BaseClass
         arcanium.owner = this;
         ClassSpells.Add(arcanium);
 
-        thunder_Storm = this.gameObject.GetComponent<MageSkill_ThunderStorm>();
-        thunder_Storm.mage = this;
-        ClassSpells.Add(thunder_Storm);
+        thunderStorm = this.gameObject.GetComponent<MageSkill_ThunderStorm>();
+        thunderStorm.mage = this;
+        ClassSpells.Add(thunderStorm);
 
     }
 
@@ -50,7 +50,7 @@ public class MageClass : BaseClass
         if (TeamTag == "BlueTeam")
         {
             blizzard.AoeTarget = FSM.BSM.RedTeamInBattle;
-            thunder_Storm.AoeTarget = FSM.BSM.RedTeamInBattle;
+            thunderStorm.AoeTarget = FSM.BSM.RedTeamInBattle;
         }
     }
 }

@@ -77,25 +77,49 @@ namespace GameServerForRPG
 
             commandsTable[7] = TurnCreation;
             commandsTable[8] = SetTurnParameter;
-            commandsTable[9] = ProcessTurn;
+            //commandsTable[9] = ProcessTurn;
 
             commandsTable[254] = StatusServer;
         }
 
-        private void ProcessTurn(byte[] data, EndPoint sender)
+        public void ProcessingTurn(ServerRoom room ,uint attackerId, int skillId, uint targetId)
         {
-            //after SetTurnParameter send a full create turn to both client, then they process it
-            throw new NotImplementedException();
+            Packet processingTurnPacket = new Packet(9, attackerId, skillId, targetId);
+            processingTurnPacket.NeedAck = true;
+
+            Send(processingTurnPacket, room.Player1.GetEndPoint());
+            Send(processingTurnPacket, room.Player2.GetEndPoint());
         }
+
+
         private void SetTurnParameter(byte[] data, EndPoint sender)
         {
-            //receive a skillId/target from clients
-            throw new NotImplementedException();
-        }
-        private void TurnCreation(byte[] data, EndPoint sender)
-        {
-            //receive a RPGhero and add it to the turnOrder 
-            throw new NotImplementedException();
+            uint clientId = BitConverter.ToUInt32(data, 1);
+            GameClient client = GetClientFromID(clientId);
+
+            uint roomId = BitConverter.ToUInt32(data, 5);
+            ServerRoom room = GetRoomFromID(roomId);
+
+            if (!room.GetClientTable().Contains(client))
+            {
+                client.UpdateMalus();
+                return;
+            }
+
+            uint heroId = BitConverter.ToUInt32(data, 9);
+            if (!room.GetGameObjectTable().ContainsKey(heroId))
+            {
+                client.UpdateMalus();
+                return;
+            }
+
+            RPGHero hero = (RPGHero)room.GetGameObjectFromId(heroId);
+
+            int skillId = BitConverter.ToInt32(data, 13);
+            uint targetId = BitConverter.ToUInt32(data, 17);
+            GameObject target = room.GetGameObjectFromId(targetId);               
+
+            room.SetTurnParameters(hero, skillId, (RPGHero)target);
         }
 
         //commandsTable
@@ -117,98 +141,11 @@ namespace GameServerForRPG
             clientsTable[sender] = newClient;
             room.AddGameClient(newClient);
 
-            GameLogicFST clientFST = new GameLogicFST(0, this, newClient);
-            RegisterGameObject(room.RoomID, clientFST);
-
-            newClient.SetClientFSM(clientFST);
-
             Console.WriteLine(newClient.TeamTag);
-            Packet welcomePacket = new Packet(1, newClient.ClientID, room.RoomID, clientFST.ID, newClient.TeamTag);
+            Packet welcomePacket = new Packet(1, newClient.ClientID, room.RoomID, newClient.TeamTag);
             welcomePacket.NeedAck = true;
             newClient.Enqueue(welcomePacket);
         }
-        /*
-        public T Spawn<T>(uint roomID) where T : GameObject
-        {
-            object[] ctorParams = { this };
-
-            T newGameObject = Activator.CreateInstance(typeof(T), ctorParams) as T;
-            RegisterGameObject(roomID, newGameObject);
-            return newGameObject;
-
-            /*
-
-            Packet welcome = new Packet(1, avatar.ObjectType, avatar.Id, avatar.X, avatar.Y, avatar.Z);
-            welcome.NeedAck = true;
-            newClient.Enqueue(welcome);
-
-            // spawn all server's objects in the new client
-            foreach (GameObject gameObject in gameObjectsTable.Values)
-            {
-                //ignore myself
-                if (gameObject == avatar)
-                    continue;
-                Packet spawn = new Packet(2, gameObject.ObjectType, gameObject.Id, gameObject.X, gameObject.Y, gameObject.Z);//1 - 5*4
-                spawn.NeedAck = true;
-                newClient.Enqueue(spawn);
-            }
-
-            // informs the other clients about the new one
-            Packet newClientSpawned = new Packet(2, avatar.ObjectType, avatar.Id, avatar.X, avatar.Y, avatar.Z);
-            newClientSpawned.NeedAck = true;
-            SendToAllClientsExceptOne(newClientSpawned, newClient);
-
-            Console.WriteLine("client {0} joined with avatar {1}", newClient, avatar.Id);
-        }
-
-             *             // check if the client has already joined
-            if (clientsTable.ContainsKey(sender))
-            {
-                GameClient badClient = clientsTable[sender];
-                badClient.IncreaseMalus();
-                return;
-            }
-
-            GameClient newClient = new GameClient(sender, this);
-            clientsTable[sender] = newClient;
-            //Avatar avatar = new Avatar(newClient.Server);
-            Avatar avatar = Spawn<Avatar>();
-            avatar.SetOwner(newClient);
-            Packet welcome = new Packet(1, avatar.ObjectType, avatar.Id, avatar.X, avatar.Y, avatar.Z);
-            welcome.NeedAck = true;
-            newClient.Enqueue(welcome);
-
-            // spawn all server's objects in the new client
-            foreach (GameObject gameObject in gameObjectsTable.Values)
-            {
-                //ignore myself
-                if (gameObject == avatar)
-                    continue;
-                Packet spawn = new Packet(2, gameObject.ObjectType, gameObject.Id, gameObject.X, gameObject.Y, gameObject.Z);//1 - 5*4
-                spawn.NeedAck = true;
-                newClient.Enqueue(spawn);
-            }
-
-            // informs the other clients about the new one
-            Packet newClientSpawned = new Packet(2, avatar.ObjectType, avatar.Id, avatar.X, avatar.Y, avatar.Z);
-            newClientSpawned.NeedAck = true;
-            SendToAllClientsExceptOne(newClientSpawned, newClient);
-
-            Console.WriteLine("client {0} joined with avatar {1}", newClient, avatar.Id);
-          
-            uint prefabType = BitConverter.ToUInt32(data, 1);
-        uint objectID = BitConverter.ToUInt32(data, 5);
-        string inGameName = BitConverter.ToString(data, 9);
-
-        string teamTag = BitConverter.ToString(data, 13);
-
-        float x = BitConverter.ToUInt32(data, 17);
-        if (teamTag == "RedTeam")
-            x = -x;
-        float y = BitConverter.ToUInt32(data, 21);
-        float z = BitConverter.ToUInt32(data, 25);
-            
-        }*/
 
         private void Spawn(byte[] data, EndPoint sender)
         {
@@ -237,15 +174,6 @@ namespace GameServerForRPG
             newHero.SetPosition(x, y, z);
 
             Console.WriteLine("Spaned Object {0}", room.GetGameObjectTable().Count);
-            //Packet spawnPacket = new Packet(2, newHero.ClassID, newHero.ID, newHero.InGameName, newHero.TeamTag, newHero.X, newHero.Y, newHero.Z);
-            //Packet spawnPacket = new Packet(2, newHero.ClassID, newHero.ID, newHero.GetOwner().ClientID, newHero.X, newHero.Y, newHero.Z);
-            //spawnPacket.NeedAck = true;
-            //client.Enqueue(spawnPacket);
-            //SendToOtherClientsInARoom(spawnPacket, room, client);
-            //SendToAllClientsInARoom(spawnPacket, room);
-            //Send(spawnPacket, room.Player1.GetEndPoint());
-            //Send(spawnPacket, room.Player2.GetEndPoint());
-
         }
         private RPGHero SpawnHero(uint roomID)
         {
@@ -267,14 +195,12 @@ namespace GameServerForRPG
         }
         public void GameStart(ServerRoom room)
         {
-            //Console.WriteLine("room " + room.RoomID + room.TeamSpawned);
             if (!room.GameStarted)
             { 
                 Console.WriteLine("Game start in room " + room.RoomID);
                 Packet startGamePacket = new Packet(5);
                 startGamePacket.NeedAck = true;
 
-                //SendToAllClientsInARoom(startGamePacket, room);
                 Send(startGamePacket, room.Player1.GetEndPoint());
                 Send(startGamePacket, room.Player2.GetEndPoint());
 
@@ -304,6 +230,38 @@ namespace GameServerForRPG
                 room.TeamSpawned();
             }
         }
+
+        private void TurnCreation(byte[] data, EndPoint sender)
+        {
+            uint clientId = BitConverter.ToUInt32(data, 1);
+            GameClient client = GetClientFromID(clientId);
+
+            uint roomId = BitConverter.ToUInt32(data, 5);
+            ServerRoom room = GetRoomFromID(roomId);
+
+            if (!room.GetClientTable().Contains(client))
+            {
+                client.UpdateMalus();
+                return;
+            }
+            
+            uint heroId = BitConverter.ToUInt32(data, 9);
+            if (!room.GetGameObjectTable().ContainsKey(heroId))
+            {
+                client.UpdateMalus();
+                return;
+            }
+
+            RPGHero hero = (RPGHero)room.GetGameObjectFromId(heroId);
+            room.AddNewTurn(hero);
+
+            Packet addTurnPacket = new Packet(7, hero.ID);
+            addTurnPacket.NeedAck = true;
+
+            Send(addTurnPacket, room.Player1.GetEndPoint());
+            Send(addTurnPacket, room.Player2.GetEndPoint());
+        }
+
 
         public void StatusServer(byte[] data, EndPoint sender)
         {
