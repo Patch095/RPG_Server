@@ -57,6 +57,10 @@ public class RougeClass : BaseClass
         {
             skill_DaggersThrow.AoeTarget = FSM.BSM.RedTeamInBattle;
         }
+        else if (TeamTag == "BlueTeam")
+        {
+            skill_DaggersThrow.AoeTarget = FSM.BSM.BlueTeamInBattle;
+        }
     }
 
 
