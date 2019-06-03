@@ -103,4 +103,6 @@ public class Turn
                 return chosenAttack.TargetAllies;
         }
     }
+
+    public bool IsReady;
 }

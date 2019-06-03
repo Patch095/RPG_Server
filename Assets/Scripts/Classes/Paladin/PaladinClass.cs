@@ -12,9 +12,9 @@ public class PaladinClass : BaseClass
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            Name = name + "_Paladin";
+            CharacterName = name + "_Paladin";
         else
-            Name = name;
+            CharacterName = name;
 
         ClassName = "Paladin";
         MaxHp = 200;

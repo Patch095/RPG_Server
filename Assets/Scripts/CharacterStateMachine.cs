@@ -7,7 +7,11 @@ using System.Collections;
 public class CharacterStateMachine : MonoBehaviour
 {
     public BattleStateMachine BSM;
-
+    private GameClient client;
+    public void SetServer(GameClient serverClient)
+    {
+        client = serverClient;
+    }
     public BaseClass owner;
 
     // this is the target on the character avatar, it will appeare when seleceted
@@ -62,7 +66,7 @@ public class CharacterStateMachine : MonoBehaviour
 
         currentState = TurnState.PROCESSING_TURN;
 
-        BSM.AddToTeamList(owner);
+        //BSM.AddToTeamList(owner);
     }
 
     // Update is called once per frame
@@ -80,14 +84,18 @@ public class CharacterStateMachine : MonoBehaviour
                 FillTurnMetter();
                 break;
 
-            case TurnState.BSM_PROCESSING:
-                BSM.CharactersToManage.Add(this);
-                currentState = TurnState.CHOOSE_ACTION;
+            case TurnState.CHOOSE_ACTION:
+                client.CharacterATBReady(owner);
+                //ChooseAction();
+                currentState = TurnState.BSM_PROCESSING;
                 break;
 
-            case TurnState.CHOOSE_ACTION:
-                ChooseAction();
-                currentState = TurnState.IDLE;
+            case TurnState.BSM_PROCESSING:
+                if (BSM.TurnOrderContatinsHero(owner))
+                {
+                    BSM.CharactersToManage.Add(this);
+                    currentState = TurnState.IDLE;
+                }
                 break;
 
             case TurnState.ACTION:
@@ -127,7 +135,7 @@ public class CharacterStateMachine : MonoBehaviour
         ATBbar.transform.localScale = new Vector3(Mathf.Clamp01(fillGauge), 1f, 1f);
 
         if(currentCooldown >= maxCooldown)
-            currentState = TurnState.BSM_PROCESSING;
+            currentState = TurnState.CHOOSE_ACTION;
     }
 
     void ChooseAction()
@@ -146,6 +154,7 @@ public class CharacterStateMachine : MonoBehaviour
             yield break;
 
         onAnimation = true;
+        Target = this.transform;
 
         //Animation
         if (BSM.TurnOrder[0].actionType == Turn.AnimationType.MEELE)
@@ -164,7 +173,8 @@ public class CharacterStateMachine : MonoBehaviour
         }
         else if (BSM.TurnOrder[0].actionType == Turn.AnimationType.RANGED)
         {
-
+            //creai prefab preso da rangedSkill, scale = 0
+            //prefab scale += time.deltaTime;
         }
         //animation is finished
         BSM.OnTurnEnd();

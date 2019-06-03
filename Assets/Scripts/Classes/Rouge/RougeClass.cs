@@ -14,9 +14,9 @@ public class RougeClass : BaseClass
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            Name = name + "_Rouge";
+            CharacterName = name + "_Rouge";
         else
-            Name = name;
+            CharacterName = name;
 
         ClassName = "Rouge";
         MaxHp = 145;

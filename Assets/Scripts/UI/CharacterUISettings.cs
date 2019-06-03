@@ -23,7 +23,7 @@ public class CharacterUISettings : MonoBehaviour
         characaterName = characterInfoPanel.GetComponent<TextMeshProUGUI>();
 
         //Player name Init       
-        characaterName.text = Owner.Name;
+        characaterName.text = Owner.CharacterName;
         if (characaterName.text == "Default")
             characaterName.text += "_" + Owner.ClassName;
 

@@ -61814,8 +61814,7 @@ MonoBehaviour:
   AttackDescription: 
   ManaCost: 0
   DamageValue: 0
-  AOE: 0
-  RandomTargets: 0
+  AoE: 0
   HaveAdditionEffects: 0
   TurnInfo:
     Attacker: {fileID: 0}
@@ -61823,7 +61822,6 @@ MonoBehaviour:
     actionType: 0
     chosenAttack: {fileID: 0}
     IsAoE: 0
-    HaveRandomTargets: 0
   TargetAllies: 0
   owner: {fileID: 0}
 --- !u!114 &8682746389230149051
@@ -61838,7 +61836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0948b295b94ba44469c06e6bb69e5721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
+  CharacterName: 
   ClassName: 
   MaxHp: 0
   MaxMp: 0
@@ -61858,6 +61856,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WhiteMage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5975275916526976318, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5458253426045889210, guid: 9f3b0a0d9c54fef4d843eada9cafa18f,
         type: 3}
