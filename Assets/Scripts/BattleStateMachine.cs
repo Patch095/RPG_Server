@@ -18,14 +18,22 @@ public class BattleStateMachine : MonoBehaviour
         PROCESSING_TURN,
         PERFORM_ACTION
     }
-    public PerformAction BattleState;
+    public PerformAction battleState;
+    public PerformAction BattleState
+    {
+        get { return battleState; }
+    }
 
-    public List<BaseClass> BlueTeamInBattle;
-    public List<BaseClass> RedTeamInBattle;
-    public List<BaseClass> DeathCharacters;
+
+    private List<BaseClass> blueTeamInBattle;
+    private List<BaseClass> redTeamInBattle;
+    private List<BaseClass> deathCharacters;
+    public List<BaseClass> BlueTeamInBattle { get { return blueTeamInBattle; } }
+    public List<BaseClass> RedTeamInBattle { get { return redTeamInBattle; } }
+    public List<BaseClass> DeathCharacters { get { return deathCharacters; } }
 
     public List<Turn> TurnOrder;
-    public bool TurnOrderContatinsHero(BaseClass hero)
+    public bool TurnOrderContatins(BaseClass hero)
     {
         foreach(Turn turn in TurnOrder)
         {
@@ -48,16 +56,16 @@ public class BattleStateMachine : MonoBehaviour
 
         TurnOrder = new List<Turn>();
         CharactersToManage = new List<CharacterStateMachine>();
-        BlueTeamInBattle = new List<BaseClass>();        
-        RedTeamInBattle = new List<BaseClass>();
-        DeathCharacters = new List<BaseClass>();
+        blueTeamInBattle = new List<BaseClass>();
+        redTeamInBattle = new List<BaseClass>();
+        deathCharacters = new List<BaseClass>();
 
-        BattleState = PerformAction.IDLE;
+        battleState = PerformAction.IDLE;
     }
 
     public void ActiveUI()
     {
-        UI.SetUI();
+        UI.SetUIBlueTeam();
     }
 
     public void AddToTeamList(BaseClass player)
@@ -94,6 +102,9 @@ public class BattleStateMachine : MonoBehaviour
         switch (BattleState)
         {
             case PerformAction.IDLE:
+                if (TurnOrder.Count > 0)
+                    battleState = PerformAction.PROCESSING_TURN;
+
                 //if (TurnOrder.Count > 0)
                 //    BattleState = PerformAction.PROCESSING_TURN;
                 break;
@@ -108,7 +119,7 @@ public class BattleStateMachine : MonoBehaviour
                     else
                         FSM.Target = TurnOrder[0].Target.transform;
                     FSM.currentState = CharacterStateMachine.TurnState.ACTION;
-                    BattleState = PerformAction.PERFORM_ACTION;
+                    battleState = PerformAction.PERFORM_ACTION;
                 //}
                 break;
 
@@ -124,16 +135,16 @@ public class BattleStateMachine : MonoBehaviour
                 //    BattleState = PerformAction.PROCESSING_TURN;
                 break;
 
-            case PerformAction.PROCESSING_TURN:
+            case PerformAction.PROCESSING_TURN: // per cambiare la visualizzazione della aoe
                 BaseClass turnPerformer = TurnOrder[0].Attacker;
                 CharacterStateMachine FSM = turnPerformer.GetFSM();
-                if(TurnOrder[0].IsAoE)
-                    FSM.Target = TurnOrder[0].Attacker.transform;
+                if (TurnOrder[0].IsAoE)
+                    FSM.Target= TurnOrder[0].Attacker.transform;
                 else
                     FSM.Target = TurnOrder[0].Target.transform;
                 FSM.currentState = CharacterStateMachine.TurnState.ACTION;
+                battleState = PerformAction.PERFORM_ACTION;
                 BattleState = PerformAction.PERFORM_ACTION;
-
                 break;
 
             case PerformAction.PERFORM_ACTION:
@@ -153,7 +164,7 @@ public class BattleStateMachine : MonoBehaviour
     public void ProcesessingTurn()
     {
         if (TurnOrder.Count > 0)
-            BattleState = PerformAction.PROCESSING_TURN;
+            battleState = PerformAction.PROCESSING_TURN;
     }
 
     public void ReceiveAction(Turn newTurn)
@@ -161,18 +172,17 @@ public class BattleStateMachine : MonoBehaviour
         TurnOrder.Add(newTurn);
     }
 
+
+    //devo creare un menù con 2 bottoni team rosso e blu , questo bottone si attiva solo se è un attacco aoe ,il bottone con cui puoi interaggire te lo dice la skill , quando il bottone è attivo vai nello state done, quando un'altra azione è in corso non è possibile usare i bottoni target come per l'attacco base 
     public void DamageCalculation()
     {
-        if (TurnOrder[0].IsAoE)//&& TurnOrder[0].AoeTarget != null)
+        if (TurnOrder[0].IsAoE)
         {
             TurnOrder[0].Attacker.GetFSM().Target = TurnOrder[0].Attacker.transform;
             for (int i = 0; i < TurnOrder[0].AoeTargetSkill.Count; i++)
             {
-            Debug.Log("cugfh");
-
                 TurnOrder[0].Target = TurnOrder[0].AoeTargetSkill[i];//.CurrentHp = TurnOrder[0].DamageValue;
                 TurnOrder[0].Target.CurrentHp = TurnOrder[0].DamageValue;
-
             }
         }
         else
@@ -180,13 +190,13 @@ public class BattleStateMachine : MonoBehaviour
     }
     public void ApplyAdditionEffects()
     {
-        if(TurnOrder[0].HaveAdditionEffects)
+        if (TurnOrder[0].HaveAdditionEffects)
             TurnOrder[0].chosenAttack.AdditionalEffect();
     }
     public void OnTurnEnd()
     {
         TurnOrder.RemoveAt(0);
-        BattleState = PerformAction.IDLE;
+        battleState = PerformAction.IDLE;
 
         UI.PlayerInput = UIManager.GUIState.ACTIVATED;
     }
