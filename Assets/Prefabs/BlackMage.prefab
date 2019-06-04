@@ -1939,11 +1939,9 @@ MonoBehaviour:
   RandomTargets: 0
   HaveAdditionEffects: 0
   TurnInfo:
-    Attacker: {fileID: 0}
-    Target: {fileID: 0}
     actionType: 0
-    chosenAttack: {fileID: 0}
   TargetAllies: 0
+  owner: {fileID: 0}
 --- !u!114 &2610935327002452034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1966,10 +1964,7 @@ MonoBehaviour:
   RandomTargets: 0
   HaveAdditionEffects: 0
   TurnInfo:
-    Attacker: {fileID: 0}
-    Target: {fileID: 0}
     actionType: 0
-    chosenAttack: {fileID: 0}
   TargetAllies: 0
 --- !u!114 &3290867649938760170
 MonoBehaviour:
@@ -1983,7 +1978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63c4162f0c970b4bac1e9856434c917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
+  CharacterName: 
   ClassName: 
   MaxHp: 0
   MaxMp: 0
@@ -2014,10 +2009,7 @@ MonoBehaviour:
   RandomTargets: 0
   HaveAdditionEffects: 0
   TurnInfo:
-    Attacker: {fileID: 0}
-    Target: {fileID: 0}
     actionType: 0
-    chosenAttack: {fileID: 0}
   TargetAllies: 0
 --- !u!114 &9047797274238678606
 MonoBehaviour:
@@ -2041,11 +2033,9 @@ MonoBehaviour:
   RandomTargets: 0
   HaveAdditionEffects: 0
   TurnInfo:
-    Attacker: {fileID: 0}
-    Target: {fileID: 0}
     actionType: 0
-    chosenAttack: {fileID: 0}
   TargetAllies: 0
+  mage: {fileID: 0}
 --- !u!1001 &4667701650554220390
 PrefabInstance:
   m_ObjectHideFlags: 0

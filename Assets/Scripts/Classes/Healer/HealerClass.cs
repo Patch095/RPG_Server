@@ -5,15 +5,20 @@ using UnityEngine;
 public class HealerClass : BaseClass
 {
     HealerSkill_HeavyWeather heavyWeather;
+    HealerSkill_HealWind healWind;
+    HealerSkill_ManaBreze manaBreze;
+
 
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            CharacterName = name + "_Cleric";
+
+            CharacterName = name + "_Healer";
+
         else
             CharacterName = name;
 
-        ClassName = "Cleric";
+        ClassName = "Healer";
         MaxHp = 160;
         MaxMp = 180;
         BaseAtk = 6;
@@ -28,10 +33,28 @@ public class HealerClass : BaseClass
         heavyWeather = this.gameObject.GetComponent<HealerSkill_HeavyWeather>();
         heavyWeather.owner = this;
         ClassSpells.Add(heavyWeather);
+
+        healWind = this.gameObject.GetComponent<HealerSkill_HealWind>();
+        healWind.owner = this;
+        ClassSpells.Add(healWind);
+
+
+        manaBreze = this.gameObject.GetComponent<HealerSkill_ManaBreze>();
+        manaBreze.owner = this;
+        ClassSpells.Add(manaBreze);
+
+
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-
+        if (TeamTag == "BlueTeam")
+        {
+            heavyWeather.AoeTarget = FSM.BSM.RedTeamInBattle;
+            manaBreze.AoeTarget = FSM.BSM.RedTeamInBattle;
+        }
     }
+
+
 }

@@ -8,17 +8,13 @@ public class HealerSkill_HeavyWeather : BaseAttack
 
     protected override void AttackInit()
     {
+        AoeTarget = new List<BaseClass>();
         AttackName = "Heavy Weather";
-        AttackDescription = "Your only offensive ability, apply a heal based on damage";
-        ManaCost = 15f;
-        DamageValue = 5f;
-
-        AoE = true;
-
-        RandomTargets = false;
+        AttackDescription = "Attack multiple Target";
+        DamageValue = 20f;
+        ManaCost = 10f;
         HaveAdditionEffects = true;
-        TargetAllies = false;
-
+        AoE = true;
         AbilityType = ActionType.MEELE;
     }
 

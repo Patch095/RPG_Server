@@ -12,3 +12,10 @@ C:\Users\Tommaso\Documents\Unity Project\RPG Server\GameServerForRPG\GameServerF
 C:\Users\Tommaso\Documents\Unity Project\RPG Server\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.csproj.CoreCompileInputs.cache
 C:\Users\Tommaso\Documents\Unity Project\RPG Server\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.exe
 C:\Users\Tommaso\Documents\Unity Project\RPG Server\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.pdb
+C:\Users\damix\Desktop\RPG_Server\GameServerForRPG\GameServerForRPG\bin\Debug\GameServerForRPG.exe.config
+C:\Users\damix\Desktop\RPG_Server\GameServerForRPG\GameServerForRPG\bin\Debug\GameServerForRPG.exe
+C:\Users\damix\Desktop\RPG_Server\GameServerForRPG\GameServerForRPG\bin\Debug\GameServerForRPG.pdb
+C:\Users\damix\Desktop\RPG_Server\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.csprojAssemblyReference.cache
+C:\Users\damix\Desktop\RPG_Server\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.csproj.CoreCompileInputs.cache
+C:\Users\damix\Desktop\RPG_Server\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.exe
+C:\Users\damix\Desktop\RPG_Server\GameServerForRPG\GameServerForRPG\obj\Debug\GameServerForRPG.pdb
