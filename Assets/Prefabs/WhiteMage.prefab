@@ -61815,13 +61815,11 @@ MonoBehaviour:
   ManaCost: 0
   DamageValue: 0
   AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
   HaveAdditionEffects: 0
   TurnInfo:
-    Attacker: {fileID: 0}
-    Target: {fileID: 0}
     actionType: 0
-    chosenAttack: {fileID: 0}
-    IsAoE: 0
   TargetAllies: 0
   owner: {fileID: 0}
 --- !u!114 &8682746389230149051
@@ -61845,6 +61843,79 @@ MonoBehaviour:
   Speed: 0
   TeamTag: 
   ClassSpells: []
+--- !u!114 &632373170597427710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109499434794650477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac25156aff05aea4f90f18c898ca5b5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    actionType: 0
+  TargetAllies: 0
+--- !u!114 &1986264463341505754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109499434794650477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a05b5e607eea124f9a2150d2a94ee49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    actionType: 0
+  TargetAllies: 0
+  owner: {fileID: 0}
+--- !u!114 &5801617109201145907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109499434794650477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387bfd36f746b06449b126880844bdd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityType: 0
+  AttackName: 
+  AttackDescription: 
+  ManaCost: 0
+  DamageValue: 0
+  AoE: 0
+  AoeTarget: []
+  RandomTargets: 0
+  HaveAdditionEffects: 0
+  TurnInfo:
+    actionType: 0
+  TargetAllies: 0
 --- !u!1001 &6010463744419952211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61943,14 +62014,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5715755779634128188}
     m_Modifications:
-    - target: {fileID: 100000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
-      propertyPath: m_Name
-      value: book_0001d
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.69
@@ -62006,6 +62069,14 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
       propertyPath: m_LocalScale.x
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
+      propertyPath: m_Name
+      value: book_0001d
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}

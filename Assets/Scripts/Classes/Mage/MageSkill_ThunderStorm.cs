@@ -23,9 +23,7 @@ public class MageSkill_ThunderStorm : BaseAttack
         if (HaveAdditionEffects)
         {
             mage.Speed -= 0.5f;
-            mage.CurrentHp = +5f;
+            mage.CurrentHp = 15f;
         }
     }
-    
-
 }

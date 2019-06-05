@@ -6,17 +6,15 @@ using UnityEngine;
 //public class Turn : MonoBehaviour
 public class Turn
 {
-    public enum AnimationType { MEELE, RANGED};
-
-    private BaseClass attacker;
+    public BaseClass attacker;
     public BaseClass Attacker { get { return attacker; } }
     public void SetAttacker(BaseClass atk)
     {
         attacker = atk;
     }
 
-    private BaseClass target;
-    public BaseClass Target { get { return Target; } }
+    public BaseClass target;
+    public BaseClass Target { get { return target; } }
     public void SetTarget(BaseClass targ)
     {
         target = targ;
@@ -49,25 +47,7 @@ public class Turn
         }
     }
 
-    public AnimationType actionType; // we will use this for basic animations
-    public AnimationType Animation
-    {
-        get
-        {
-            if (ChosenAttack == null)
-                return actionType;
-            else
-            {
-                if (ChosenAttack.AbilityType == BaseAttack.ActionType.MEELE)
-                    actionType = AnimationType.MEELE;
-                else if (ChosenAttack.AbilityType == BaseAttack.ActionType.RANGED)
-                    actionType = AnimationType.RANGED;
-            }
-            return actionType;
-        }
-    }
-
-    private BaseAttack chosenAttack;
+    public BaseAttack chosenAttack;
     public BaseAttack ChosenAttack { get { return chosenAttack; } }
     public void SetChosenAttack(BaseAttack attack)
     {
@@ -97,7 +77,6 @@ public class Turn
                 return null; 
             }
         }
-        
     }
     public bool HaveAdditionEffects
     {
@@ -126,5 +105,12 @@ public class Turn
     public void SetReady()
     {
         isReady = true;
+    }
+
+    private bool turnEnd;
+    public bool TurnEnd { get { return turnEnd; } }
+    public void SetTurnEnd()
+    {
+        turnEnd = true;
     }
 }

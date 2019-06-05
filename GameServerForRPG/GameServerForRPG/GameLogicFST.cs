@@ -17,10 +17,6 @@ namespace GameServerForRPG
 
         private bool turnReady;
         public bool TurnReady { get { return turnReady; } }
-        public void SetTurnReady()
-        {
-            turnReady = true;
-        }
 
         public Turn(RPGHero turnOwner)
         {
@@ -34,16 +30,25 @@ namespace GameServerForRPG
         {
             this.skillID = skillID;
             this.target = target;
-        }       
+            turnReady = true;
+        }
+
+        public void Print()
+        {
+            Console.WriteLine("{0} attack {1} with skill {2}", Attacker.ID, Target.ID, SkillID);
+        }
     }
 
     public class GameLogicFST : GameObject
     {
+        private ServerRoom owner;
+        public ServerRoom Room { get { return owner; } }
+
         public List<Turn> TurnOrder;
         public bool HeroIsRegisted(RPGHero hero)
         {
             foreach (Turn turn in TurnOrder)
-                if (turn.Attacker == hero)
+                if (turn.Attacker.ID == hero.ID)
                     return true;
             return false;
         }
@@ -74,9 +79,10 @@ namespace GameServerForRPG
             }
         }
 
-        public GameLogicFST(uint objectType, GameServer server, GameClient client = null) : base(1, server, client)
+        public GameLogicFST(uint objectType, GameServer server, ServerRoom room) : base(1, server)
         {
             TurnOrder = new List<Turn>();
+            owner = room;
         }
 
         public void PrintTurnOrder()
@@ -85,7 +91,7 @@ namespace GameServerForRPG
             {
                 for (int i = 0; i < TurnOrder.Count; i++)
                 {
-                    Console.WriteLine(TurnOrder[i]);
+                    Console.WriteLine("Attacker: " + TurnOrder[i].Attacker.ID);
                 }
             }
             else
@@ -93,9 +99,12 @@ namespace GameServerForRPG
         }
         public void AddTurn(RPGHero newAttacker)
         {
-            if (HeroIsRegisted(newAttacker))
+            if (!HeroIsRegisted(newAttacker))
             {
                 Turn newTurn = new Turn(newAttacker);
+                TurnOrder.Add(newTurn);
+                PrintTurnOrder();
+                Room.CreateTurn(newAttacker.ID);
             }
         }
 
@@ -106,20 +115,23 @@ namespace GameServerForRPG
                 Turn selectedTurn = GetTurnFromAttacker(attacker);
                 selectedTurn.SetTurnParamaters(skillID, target);
 
-                selectedTurn.SetTurnReady();
+                Console.WriteLine("Turn Info: " + attacker.ID, skillID, target.ID);
+
+                uint targetId = 142;
+                if (target != null)
+                    targetId = target.ID;
+
+                StartProcessing();
+                selectedTurn.Print();
+                Room.ProcessingTurn(attacker.ID, skillID, targetId);
             }
         }
-        public void GetTurnInfo(ref uint attackerId, ref int skillId, ref uint targetId)
+        public void TurnEnded()
         {
-            if (TurnOrder[0].TurnReady)
+            if (processTurn)
             {
-                Turn turn = TurnOrder[0];
-                attackerId = turn.Attacker.ID;
-                skillId = turn.SkillID;
-                if (turn.Target != null)
-                    targetId = turn.Target.ID;
-                else
-                    targetId = uint.MaxValue;
+                TurnOrder.RemoveAt(0);
+                processTurn = false;
             }
         }
     }

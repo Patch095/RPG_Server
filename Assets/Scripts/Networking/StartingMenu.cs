@@ -30,7 +30,9 @@ public class StartingMenu : MonoBehaviour
     public Button ReadyButton;
 
     public GameObject blueCamera;
+    public RectTransform blueUI;
     public GameObject redCamera;
+    public RectTransform redUI;
 
     // Update is called once per frame
     void Update()
@@ -87,8 +89,21 @@ public class StartingMenu : MonoBehaviour
     public void SetCamera(string cameraTag)
     {
         if (cameraTag == "BlueTeam")
-            blueCamera.SetActive(true);
+        {
+            redUI.offsetMin = new Vector2(redUI.offsetMin.x, 30000);
+            //blueCamera.SetActive(true);
+            //redCamera.SetActive(false);
+        }
         else if (cameraTag == "RedTeam")
-            redCamera.SetActive(true);
+        {
+            blueUI.offsetMin = new Vector2(blueUI.offsetMin.x, 30000);
+            //blueCamera.SetActive(false);
+            //redCamera.SetActive(true);
+        }
+    }
+    public void ActiveCamera()
+    {
+        blueCamera.SetActive(true);
+        redCamera.SetActive(true);
     }
 }

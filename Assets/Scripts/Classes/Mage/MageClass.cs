@@ -33,7 +33,6 @@ public class MageClass : BaseClass
         blizzard = this.gameObject.GetComponent<MageSkill_Blizzard>();
         ClassSpells.Add(blizzard);
 
-
         arcanium = this.gameObject.GetComponent<MageSkill_Arcanium>();
         arcanium.owner = this;
         ClassSpells.Add(arcanium);
@@ -41,7 +40,6 @@ public class MageClass : BaseClass
         thunderStorm = this.gameObject.GetComponent<MageSkill_ThunderStorm>();
         thunderStorm.mage = this;
         ClassSpells.Add(thunderStorm);
-
     }
 
     // Update is called once per frame

@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class RougeSkill_QuickSlash : BaseAttack
 {
-
     public RougeSkill_QuickSlash() : base() { }
 
-    public RougeClass ownerRouge;
+    public RougeClass owner;
     protected override void AttackInit()
     {
         AttackName = "Quick Slash";
         AttackDescription = "Attack a single Target, increment speed";
         DamageValue = 20f;
-        ManaCost = 0f;
+        ManaCost = 20f;
         HaveAdditionEffects = true;
-        AoE = false; //random attack false
+        AoE = false;
     }
 
     public override void AdditionalEffect()
     {
         if (HaveAdditionEffects)
         {
-        ownerRouge.Speed += 0.5f;
+            owner.Speed += 0.5f;
         }
     }
 }

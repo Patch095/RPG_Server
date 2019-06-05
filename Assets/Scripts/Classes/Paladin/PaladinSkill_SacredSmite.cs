@@ -17,11 +17,8 @@ public class PaladinSkill_SacredSmite : BaseAttack
 
         AoE = false;
 
-        RandomTargets = false;
         HaveAdditionEffects = true;
         TargetAllies = false;
-
-        AbilityType = ActionType.MEELE;
     }
 
     public override void AdditionalEffect()

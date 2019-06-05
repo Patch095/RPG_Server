@@ -78,19 +78,49 @@ namespace GameServerForRPG
             commandsTable[7] = TurnCreation;
             commandsTable[8] = SetTurnParameter;
             //commandsTable[9] = ProcessTurn;
+            commandsTable[10] = EndTurn;
 
             commandsTable[254] = StatusServer;
+        }
+
+        private void EndTurn(byte[] data, EndPoint sender)
+        {
+            uint clientId = BitConverter.ToUInt32(data, 1);
+            GameClient client = GetClientFromID(clientId);
+
+            uint roomId = BitConverter.ToUInt32(data, 5);
+            ServerRoom room = GetRoomFromID(roomId);
+
+            if (!room.GetClientTable().Contains(client))
+            {
+                client.UpdateMalus();
+                return;
+            }
+            room.SetPlayerEndTurn(client);
+        }
+        public void RoomTurnEnd(ServerRoom room)
+        {
+            if (room.GameLogicProcessTurn)
+            {
+                Console.WriteLine("Turn ended in room " + room.RoomID);
+
+                Packet endTurnPacket = new Packet(10);
+                endTurnPacket.NeedAck = true;
+
+                Send(endTurnPacket, room.Player1.GetEndPoint());
+                Send(endTurnPacket, room.Player2.GetEndPoint());
+
+                room.EndTurn();
+            }
         }
 
         public void ProcessingTurn(ServerRoom room ,uint attackerId, int skillId, uint targetId)
         {
             Packet processingTurnPacket = new Packet(9, attackerId, skillId, targetId);
             processingTurnPacket.NeedAck = true;
-
             Send(processingTurnPacket, room.Player1.GetEndPoint());
             Send(processingTurnPacket, room.Player2.GetEndPoint());
         }
-
 
         private void SetTurnParameter(byte[] data, EndPoint sender)
         {
@@ -117,9 +147,12 @@ namespace GameServerForRPG
 
             int skillId = BitConverter.ToInt32(data, 13);
             uint targetId = BitConverter.ToUInt32(data, 17);
-            GameObject target = room.GetGameObjectFromId(targetId);               
+            RPGHero target = null;
+            if(targetId != 172)
+                target = (RPGHero)room.GetGameObjectFromId(targetId);
 
-            room.SetTurnParameters(hero, skillId, (RPGHero)target);
+            Console.WriteLine("Attacker : {0}, skill: {1}, Target: {2}", hero.ID, skillId, targetId);
+            room.SetTurnParameters(hero, skillId, target);
         }
 
         //commandsTable
@@ -254,14 +287,15 @@ namespace GameServerForRPG
 
             RPGHero hero = (RPGHero)room.GetGameObjectFromId(heroId);
             room.AddNewTurn(hero);
-
-            Packet addTurnPacket = new Packet(7, hero.ID);
+        }
+        public void SpawnNewTurn(ServerRoom room, uint heroID)
+        {
+            Packet addTurnPacket = new Packet(7, heroID);
             addTurnPacket.NeedAck = true;
 
             Send(addTurnPacket, room.Player1.GetEndPoint());
             Send(addTurnPacket, room.Player2.GetEndPoint());
         }
-
 
         public void StatusServer(byte[] data, EndPoint sender)
         {

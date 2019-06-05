@@ -15,11 +15,8 @@ public class PaladinSkill_HolyStrenght : BaseAttack
         ManaCost = 12f;
 
         AoE = false;
-        RandomTargets = false;
         HaveAdditionEffects = true;
         TargetAllies = false;
-
-        AbilityType = ActionType.RANGED;
     }
     public void SetDamage(float damage)
     {

@@ -38,7 +38,6 @@ namespace GameServerForRPG
         }
 
         const int ROOM_SIZE = 2;
-
         private List<GameClient> clientsTable;
         public bool RoomContainsThisClient(GameClient newClient)
         {
@@ -47,7 +46,6 @@ namespace GameServerForRPG
                     return true;
             return false;
         }
-
         public List<GameClient> GetClientTable()
         {
             return clientsTable;
@@ -78,6 +76,18 @@ namespace GameServerForRPG
             }
         }
 
+        public void AddGameClient(GameClient newGameClient)
+        {
+            if (clientsTable.Count < ROOM_SIZE)
+            {
+                clientsTable.Add(newGameClient);
+                if (newGameClient == Player1)
+                    newGameClient.EnterInARoom(this, "BlueTeam");
+                else if (newGameClient == Player2)
+                    newGameClient.EnterInARoom(this, "RedTeam");
+            }
+        }
+
         public void SetPlayersReady(GameClient client, bool isClientReady)
         {
             if (clientsTable.Contains(client))
@@ -98,6 +108,7 @@ namespace GameServerForRPG
         {
             gameStarted = true;
         }
+
         private bool spawnTeam;
         public bool SpawnTeam { get { return spawnTeam; } }
         public void TeamSpawned()
@@ -105,27 +116,28 @@ namespace GameServerForRPG
             spawnTeam = true;
         }
 
-        public void AddGameClient(GameClient newGameClient)
-        {
-            if (clientsTable.Count < ROOM_SIZE)
-            {
-                clientsTable.Add(newGameClient);
-                if (newGameClient == Player1)
-                    newGameClient.EnterInARoom(this, "BlueTeam");
-                else if (newGameClient == Player2)
-                    newGameClient.EnterInARoom(this, "RedTeam");
-            }
-        }
-
         private GameLogicFST gameLogic;
         public void AddNewTurn(RPGHero attacker)
         {
             gameLogic.AddTurn(attacker);
         }
-        public void SetTurnParameters(RPGHero attacker, int skillId = -1, RPGHero target = null)
+        public void SetTurnParameters(RPGHero attacker, int skill = -1, RPGHero target = null)
         {
-            gameLogic.TurnSettings(attacker, skillId, target);
+            gameLogic.TurnSettings(attacker, skill, target);
         }
+        public void ProcessingTurn(uint attackerId, int skillId, uint targetId)
+        {
+            server.ProcessingTurn(this, attackerId, skillId, targetId);
+        }
+        public void SetPlayerEndTurn(GameClient client)
+        {
+            if (clientsTable.Contains(client))
+            {
+                client.SetTurnEnd(true);
+                Console.WriteLine(client + " turn end");
+            }
+        }
+        public bool GameLogicProcessTurn { get { return gameLogic.ProcessTurn; } }
 
         public ServerRoom(uint id, GameServer gameServer)
         {
@@ -135,7 +147,7 @@ namespace GameServerForRPG
             clientsTable = new List<GameClient>(ROOM_SIZE);
             gameObjectsTable = new Dictionary<uint, GameObject>();
 
-            gameLogic = new GameLogicFST(1, server);
+            gameLogic = new GameLogicFST(1, server, this);
 
             gameStarted = false;
             spawnTeam = false;
@@ -156,22 +168,23 @@ namespace GameServerForRPG
             if (gameStarted && !spawnTeam && gameObjectsTable.Count >= 8)
                 server.SpawnHeroes(this);
 
-            if (gameLogic.TurnReadyToBeProcessed && !gameLogic.ProcessTurn)
+            if (gameLogic.ProcessTurn && Player1.TurnEnded && Player2.TurnEnded)
             {
-                uint attackerId = uint.MinValue;
-                int skillId = int.MinValue;
-                uint targetId = uint.MinValue;
-                gameLogic.GetTurnInfo(ref attackerId, ref skillId, ref targetId);
-                if (targetId == uint.MaxValue)
-                    targetId = 172;
-
-                server.ProcessingTurn(this, attackerId, skillId, targetId);
-                gameLogic.StartProcessing();
+                server.RoomTurnEnd(this);
             }
-
         }
 
-
+        public void CreateTurn(uint heroID)
+        {
+            server.SpawnNewTurn(this, heroID);
+        }
+        public void EndTurn()
+        {
+            Player1.SetTurnEnd(false);
+            Player2.SetTurnEnd(false);
+            gameLogic.TurnEnded();
+        }
+        
 
         //scripts for test
         public int GetGameObjectsNumber()

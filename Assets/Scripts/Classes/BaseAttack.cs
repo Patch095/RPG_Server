@@ -5,9 +5,6 @@ using UnityEngine;
 [System.Serializable]
 abstract public class BaseAttack : MonoBehaviour
 {
-    public enum ActionType { MEELE, RANGED };
-    public ActionType AbilityType;
-
     public string AttackName;
     public string AttackDescription;
     public float ManaCost;
@@ -15,7 +12,6 @@ abstract public class BaseAttack : MonoBehaviour
 
     public bool AoE;
     public List<BaseClass> AoeTarget;     
-    public bool RandomTargets;
     public bool HaveAdditionEffects;
     public Turn TurnInfo;
     public bool TargetAllies;
@@ -31,7 +27,9 @@ abstract public class BaseAttack : MonoBehaviour
 
     public virtual void AdditionalEffect()
     {
-        if (HaveAdditionEffects) { }
+        if (HaveAdditionEffects)
+        {
             //Apply Addition Effect
+        }
     }
 }

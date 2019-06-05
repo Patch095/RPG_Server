@@ -31,7 +31,7 @@ public class RougeClass : BaseClass
         ClassSpells = new List<BaseAttack>();
 
         skill_QuickSlash = this.gameObject.GetComponent<RougeSkill_QuickSlash>();
-        skill_QuickSlash.ownerRouge = this;
+        skill_QuickSlash.owner = this;
         ClassSpells.Add(skill_QuickSlash);
 
         skill_DaggersThrow = this.gameObject.GetComponent<RougeSkill_DaggersThrow>();
@@ -40,7 +40,7 @@ public class RougeClass : BaseClass
 
 
         skill_LeechStab = this.gameObject.GetComponent<RougeSkill_LeechStab>();
-        skill_LeechStab.ownerRougeLeech = this;
+        skill_LeechStab.owner = this;
         ClassSpells.Add(skill_LeechStab);
 
 

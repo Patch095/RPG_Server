@@ -86,7 +86,6 @@ public class GameClient : MonoBehaviour
 
     void Start()
     {
-        //GameLogic.SetActive(false);
         startMenu = StartingMenu.GetComponent<StartingMenu>();
         startMenu.SetOwner(this);
         bsm = GameLogic.GetComponent<BattleStateMachine>();
@@ -114,21 +113,45 @@ public class GameClient : MonoBehaviour
         commandsTable[7] = TurnCreation;
         //commandsTable[8] = SetTurnParameter;
         commandsTable[9] = ProcessTurn;
+        commandsTable[10] = EndTurn;
 
         commandsTable[254] = StatusServer;
-
         //commandsTable[255] = Ack;
+    }
+
+    private void EndTurn(byte[] data, EndPoint sender)
+    {
+        bsm.EndTurn();
+    }
+    public void TurnEnded()
+    {
+        Packet TurnEndPacket = new Packet(10, myIdOnServer, serverRoomId);
+        socket.SendTo(TurnEndPacket.GetData(), endPoint);
     }
 
     private void ProcessTurn(byte[] data, EndPoint sender)
     {
+        uint attackerId = BitConverter.ToUInt32(data, 1);
+        GameObject attackerObject = spawnedGameObjects[attackerId];
+        BaseClass attacker = attackerObject.GetComponent<BaseClass>();
 
-        //172 = target Null     -1 = skill null
+        int skillId = BitConverter.ToInt32(data, 5);
+        BaseAttack skill = attacker.GetSkillFromID(skillId);
+
+        uint targetId = BitConverter.ToUInt32(data, 9);
+        BaseClass target = null;
+        if (targetId != 172)//172 = targetNull
+        {
+            GameObject targetObject = spawnedGameObjects[targetId];
+            target = targetObject.GetComponent<BaseClass>();
+        }
+        bsm.TurnReady(attacker, skill, target);
     }
 
-    public void SetTurnParameters()
+    public void SetTurnParameters(uint attackerId, int skillId, uint targetId)
     {
-
+        Packet TurnParametersPacket = new Packet(8, myIdOnServer, serverRoomId, attackerId, skillId, targetId);
+        socket.SendTo(TurnParametersPacket.GetData(), endPoint);
     }
 
     private void TurnCreation(byte[] data, EndPoint sender)
@@ -275,13 +298,11 @@ public class GameClient : MonoBehaviour
 
     public void StartUI()
     {
+        startMenu.ActiveCamera();
         bsm.ActiveUI();
-
-        startMenu.SetCamera(clientTeamTag);
-
         StartingMenu.SetActive(false);
-
         Console.WriteLine("UI Activated");
+        startMenu.SetCamera(clientTeamTag);
     }
 
     private void StatusServer(byte[] data, EndPoint sender)

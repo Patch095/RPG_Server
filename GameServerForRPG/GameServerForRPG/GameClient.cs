@@ -77,7 +77,14 @@ namespace GameServerForRPG
             if (room != null)
                 isReady = ready;
         }
-        
+
+        private bool turnEnded;
+        public bool TurnEnded { get { return turnEnded; } }
+        public void SetTurnEnd(bool turnHasEnded)
+        {
+            turnEnded = turnHasEnded;
+        }
+
         //costruttore di un client
         public GameClient(EndPoint endPoint, GameServer server)
         {

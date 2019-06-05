@@ -14,11 +14,8 @@ public class PaladinSkill_ArmorUp : BaseAttack
         DamageValue = 0f;
 
         AoE = false;
-        RandomTargets = false;
         HaveAdditionEffects = true;
         TargetAllies = true;
-
-        AbilityType = ActionType.MEELE;
     }
 
     public override void AdditionalEffect()

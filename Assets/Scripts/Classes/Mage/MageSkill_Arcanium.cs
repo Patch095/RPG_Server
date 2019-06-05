@@ -11,16 +11,13 @@ public class MageSkill_Arcanium : BaseAttack
     protected override void AttackInit()
     {
         AttackName = "Arcanium";
-        AttackDescription = "restore Mana";
+        AttackDescription = "Magic power increase owner stats";
         ManaCost = 10f;
         DamageValue = 0f;
 
         AoE = false;
-        RandomTargets = false;
         HaveAdditionEffects = true;
         TargetAllies = true;
-
-        AbilityType = ActionType.MEELE;
     }
     public override void AdditionalEffect()
     {
@@ -32,5 +29,4 @@ public class MageSkill_Arcanium : BaseAttack
             owner.Speed += 0.2f;
         }
     }
-    
 }

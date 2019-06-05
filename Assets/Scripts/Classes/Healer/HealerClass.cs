@@ -7,7 +7,7 @@ public class HealerClass : BaseClass
     HealerSkill_HeavyWeather heavyWeather;
     HealerSkill_HealWind healWind;
     HealerSkill_ManaBreze manaBreze;
-
+    HealerSkill_Miracle miracle;
 
     protected override void ClassInit(string name)
     {
@@ -35,15 +35,13 @@ public class HealerClass : BaseClass
         ClassSpells.Add(heavyWeather);
 
         healWind = this.gameObject.GetComponent<HealerSkill_HealWind>();
-        healWind.owner = this;
         ClassSpells.Add(healWind);
 
-
         manaBreze = this.gameObject.GetComponent<HealerSkill_ManaBreze>();
-        manaBreze.owner = this;
         ClassSpells.Add(manaBreze);
 
-
+        miracle = this.gameObject.GetComponent<HealerSkill_Miracle>();
+        ClassSpells.Add(miracle);
     }
 
     // Update is called once per frame
@@ -51,10 +49,13 @@ public class HealerClass : BaseClass
     {
         if (TeamTag == "BlueTeam")
         {
-            heavyWeather.AoeTarget = FSM.BSM.RedTeamInBattle;
             manaBreze.AoeTarget = FSM.BSM.RedTeamInBattle;
+            heavyWeather.AoeTarget = FSM.BSM.RedTeamInBattle;
+        }
+        else if (TeamTag == "RedTeam")
+        {
+            manaBreze.AoeTarget = FSM.BSM.BlueTeamInBattle;
+            heavyWeather.AoeTarget = FSM.BSM.BlueTeamInBattle;
         }
     }
-
-
 }

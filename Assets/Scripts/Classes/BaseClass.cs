@@ -19,6 +19,10 @@ abstract public class BaseClass : MonoBehaviour
         if (!IsAlive)
             FSM.currentState = CharacterStateMachine.TurnState.DEAD;
     }
+    public void ResetHP()
+    {
+        currentHp = MaxHp;
+    }
     public bool IsAlive { get { return currentHp > 0; } }
 
     public float MaxMp;
@@ -63,8 +67,20 @@ abstract public class BaseClass : MonoBehaviour
     }
 
     public List<BaseAttack> ClassSpells;
+    public int GetIDFromSkill(BaseAttack skill)
+    {
+        for (int i = 0; i < ClassSpells.Count; i++)
+        {
+            if (ClassSpells[i] == skill)
+                return i;
+        }
+        return -1;
+    }
     public BaseAttack GetSkillFromID(int id)
     {
-        return ClassSpells[id];
+        if (id >= 0)
+            return ClassSpells[id];
+        else
+            return null;
     }
 }

@@ -149,12 +149,17 @@ public class CharacterStateMachine : MonoBehaviour
         while (onAnimation)
             yield break;
 
-        onAnimation = true;
-        Target = this.transform;
-
-        //Animation
-        if (BSM.TurnOrder[0].actionType == Turn.AnimationType.MEELE)
+        if (!BSM.TurnOrder[0].TurnEnd)
         {
+            onAnimation = true;
+
+
+            if (BSM.TurnOrder[0].IsAoE || BSM.TurnOrder[0].TargetAlly)
+                Target = this.transform;
+            else
+                Target = BSM.TurnOrder[0].Target.transform;
+
+            //Animation
             Vector3 offset = Target.forward * 1.8f;
             endPos = Target.position + offset;
             while (MoveTowardTarget(endPos)) //move toward attack target
@@ -166,18 +171,21 @@ public class CharacterStateMachine : MonoBehaviour
 
             while (MoveTowardTarget(startPos)) //return to your startPosition
                 yield return null;
-        }
-        else if (BSM.TurnOrder[0].actionType == Turn.AnimationType.RANGED)
-        {
-            //creai prefab preso da rangedSkill, scale = 0
-            //prefab scale += time.deltaTime;
-        }
-        //animation is finished
-        BSM.OnTurnEnd();
 
-        onAnimation = false;
+            //animation is finished
+            BSM.TurnOrder[0].SetTurnEnd();
+            BSM.OnTurnEnd();
 
-        //reset character for a new turn
+            onAnimation = false;
+
+            //reset character for a new turn
+            //currentCooldown = 0f;
+            //currentState = TurnState.PROCESSING_TURN;
+        }
+    }
+
+    public void ResetATB()
+    {
         currentCooldown = 0f;
         currentState = TurnState.PROCESSING_TURN;
     }

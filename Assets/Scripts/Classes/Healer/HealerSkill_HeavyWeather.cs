@@ -15,7 +15,6 @@ public class HealerSkill_HeavyWeather : BaseAttack
         ManaCost = 10f;
         HaveAdditionEffects = true;
         AoE = true;
-        AbilityType = ActionType.MEELE;
     }
 
     public override void AdditionalEffect()
