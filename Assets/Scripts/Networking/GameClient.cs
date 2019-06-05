@@ -246,6 +246,7 @@ public class GameClient : MonoBehaviour
             newGameObject.GetComponent<CharacterStateMachine>().SetServer(this);
 
             newGameObject.SetActive(true);
+            newGameObject.name = newGameObject.GetComponent<BaseClass>().CharacterName;
             bsm.AddToTeamList(objectClass);
             Console.WriteLine("Spawned");
         }

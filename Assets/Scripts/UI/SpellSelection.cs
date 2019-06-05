@@ -20,7 +20,12 @@ public class SpellSelection : MonoBehaviour
         TextMeshProUGUI selectedSpellDescription = SelectedSpellMenu.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         selectedSpellDescription.text = Spell.AttackName + " :\n " + Spell.AttackDescription;
-        selectedSpellValue.text = "Mana cost : " + (int)Spell.ManaCost + "\n\nDamage: " + (int)Spell.DamageValue;
+        selectedSpellValue.text = "Mana cost : " + (int)Spell.ManaCost;
+        if(Spell.DamageValue >= 0)
+            selectedSpellValue.text += "\n\nDamage: " + (int)Spell.DamageValue;
+        else if (Spell.DamageValue < 0)
+            selectedSpellValue.text += "\n\nHeal: " + Mathf.Abs((int)Spell.DamageValue);
+
         if (Spell.AoE)
             selectedSpellValue.text += "\n\nAoE";
         SelectedSpellMenu.gameObject.SetActive(isActivated);

@@ -357,6 +357,7 @@ public class UIManager : MonoBehaviour
     public void MagicSubMenuInit()
     {
         BaseClass attackerClass = BSM.CharactersToManage[0].owner;
+        //Blue Team
         //Spells submenu creation
         foreach (Transform child in BlueTeamSpellsMenu)
             child.gameObject.SetActive(false);
@@ -376,14 +377,13 @@ public class UIManager : MonoBehaviour
         }
         BlueTeamSpellsMenu.gameObject.SetActive(true);
 
-        //Red team
-        BaseClass attackerClassRed = BSM.CharactersToManage[0].owner;
+        //Red Team
         //Spells submenu creation
         foreach (Transform child in RedTeamSpellsMenu)
             child.gameObject.SetActive(false);
         for (int i = 0; i < attackerClass.ClassSpells.Count; i++)
         {
-            BaseAttack currentSkill = attackerClassRed.ClassSpells[i];
+            BaseAttack currentSkill = attackerClass.ClassSpells[i];
             GameObject skillButton = RedTeamSpellsMenu.GetChild(i).gameObject;
             Button button = skillButton.GetComponent<Button>();
             Text text = skillButton.GetComponentInChildren<Text>();

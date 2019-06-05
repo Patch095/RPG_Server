@@ -35,7 +35,10 @@ namespace GameServerForRPG
 
         public void Print()
         {
-            Console.WriteLine("{0} attack {1} with skill {2}", Attacker.ID, Target.ID, SkillID);
+            if(Target != null)
+                Console.WriteLine("{0} attack {1} with skill {2}", Attacker.ID, Target.ID, SkillID);
+            else
+                Console.WriteLine("{0} attack with skill {1}", Attacker.ID, SkillID);
         }
     }
 
@@ -115,7 +118,10 @@ namespace GameServerForRPG
                 Turn selectedTurn = GetTurnFromAttacker(attacker);
                 selectedTurn.SetTurnParamaters(skillID, target);
 
-                Console.WriteLine("Turn Info: " + attacker.ID, skillID, target.ID);
+                if(target != null)
+                    Console.WriteLine("Turn Info: " + attacker.ID, skillID, target.ID);
+                else
+                    Console.WriteLine("Turn Info: " + attacker.ID, skillID);
 
                 uint targetId = 142;
                 if (target != null)
