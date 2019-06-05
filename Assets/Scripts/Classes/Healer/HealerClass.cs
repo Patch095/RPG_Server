@@ -12,9 +12,13 @@ public class HealerClass : BaseClass
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-
-            CharacterName = name + "_Healer";
-
+        {
+            if (TeamTag == "BlueTeam")
+                CharacterName = "Blue_";
+            else if (TeamTag == "RedTeam")
+                CharacterName = "Red_";
+            CharacterName += name + "_Healer";
+        }
         else
             CharacterName = name;
 

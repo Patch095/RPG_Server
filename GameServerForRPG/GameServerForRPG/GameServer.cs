@@ -199,12 +199,19 @@ namespace GameServerForRPG
             newHero.SetOwner(client);
 
             uint classId = BitConverter.ToUInt32(data, 9);
-            //string inGameName = BitConverter.ToString(data, 13);
-            newHero.SetInGameValues(classId, "");//, inGameName);
-            float x = BitConverter.ToSingle(data, 13);// 17);
-            float y = BitConverter.ToSingle(data, 17);// 21);
-            float z = BitConverter.ToSingle(data, 21);// 25);
+            newHero.SetInGameValues(classId, "");
+            float x = BitConverter.ToSingle(data, 13);
+            float y = BitConverter.ToSingle(data, 17);
+            float z = BitConverter.ToSingle(data, 21);
             newHero.SetPosition(x, y, z);
+
+            //byte[] name = new byte[12];
+            //for (int i = 0; i < name.Length; i++)
+            //{
+            //    name[i] = data[25 + i];
+            //}
+            //string heroName = System.Text.Encoding.UTF8.GetString(name);
+            //Console.WriteLine(heroName);
 
             Console.WriteLine("Spaned Object {0}", room.GetGameObjectTable().Count);
         }

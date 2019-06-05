@@ -483,7 +483,7 @@ public class UIManager : MonoBehaviour
         PlayerInput = GUIState.TURN_END;
     }
 
-    void PlayerInputDone()
+    public void PlayerInputDone()
     {
         BSM.CharactersToManage[0].owner.CurrentMp -= playerChoise.ManaCost;
 

@@ -12,7 +12,13 @@ public class PaladinClass : BaseClass
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            CharacterName = name + "_Paladin";
+        {
+            if (TeamTag == "BlueTeam")
+                CharacterName = "Blue_";
+            else if (TeamTag == "RedTeam")
+                CharacterName = "Red_";
+            CharacterName += name + "_Paladin";
+        }
         else
             CharacterName = name;
 

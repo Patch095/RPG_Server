@@ -11,14 +11,20 @@ public class MageClass : BaseClass
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            CharacterName = name + "_Mage";
+        {
+            if (TeamTag == "BlueTeam")
+                CharacterName = "Blue_";
+            else if (TeamTag == "RedTeam")
+                CharacterName = "Red_";
+            CharacterName += name + "_Mage";
+        }
         else
             CharacterName = name;
 
         ClassName = "Mage";
-        MaxHp = 120;
+        MaxHp = 160;
         MaxMp = 250;
-        BaseAtk = 5;
+        BaseAtk = 15;
         Speed = 1.5f;
     }
 

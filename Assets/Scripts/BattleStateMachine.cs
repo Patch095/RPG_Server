@@ -169,9 +169,8 @@ public class BattleStateMachine : MonoBehaviour
     {
         TurnOrder[0].Attacker.GetFSM().ResetATB();
         TurnOrder.RemoveAt(0);
+        UI.PlayerInputDone();
         battleState = PerformAction.IDLE;
-
-        UI.PlayerInput = UIManager.GUIState.ACTIVATED;
     }
 
     public void SetTurnParameters(uint attackerId, int skillId, uint targetId)

@@ -14,14 +14,20 @@ public class RougeClass : BaseClass
     protected override void ClassInit(string name)
     {
         if (name == "Default")
-            CharacterName = name + "_Rouge";
+        {
+            if (TeamTag == "BlueTeam")
+                CharacterName = "Blue_";
+            else if (TeamTag == "RedTeam")
+                CharacterName = "Red_";
+            CharacterName += name + "_Rouge";
+        }
         else
             CharacterName = name;
 
         ClassName = "Rouge";
         MaxHp = 145;
         MaxMp = 230;
-        BaseAtk = 13;
+        BaseAtk = 25;
         Speed = 2.2f;
     }
 

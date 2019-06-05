@@ -276,13 +276,3 @@ C:\Users\Tommaso\Documents\Unity Project\RPG Server\obj\Debug\Assembly-CSharp.cs
 C:\Users\Tommaso\Documents\Unity Project\RPG Server\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\Tommaso\Documents\Unity Project\RPG Server\obj\Debug\Assembly-CSharp.dll
 C:\Users\Tommaso\Documents\Unity Project\RPG Server\obj\Debug\Assembly-CSharp.pdb
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.CollabProxy.Editor.dll
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.PackageManagerUI.Editor.dll
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.ProBuilder.AddOns.Editor.dll
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.ProBuilder.AssetIdRemapUtility.dll
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.TextMeshPro.Editor.dll
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.ProBuilder.AssetIdRemapUtility.pdb
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.TextMeshPro.Editor.pdb
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.PackageManagerUI.Editor.pdb
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.CollabProxy.Editor.pdb
-C:\Users\Tommaso\Documents\Unity Project\RPG Server\Temp\bin\Debug\Unity.ProBuilder.AddOns.Editor.pdb

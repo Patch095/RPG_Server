@@ -270,26 +270,25 @@ public class GameClient : MonoBehaviour
 
             //spawn first hero
             startMenu.GetHerosInfo(0, ref classIndex, ref name);
-            //Packet spawn0Packet = new Packet(2, myIDonServer, serverRoomId, classIndex, name, 7, 1, 1);//z = 1,5,10,15
-            Packet spawn0Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z);//z = 1,5,10,15
+            Packet spawn0Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z, name);
             socket.SendTo(spawn0Packet.GetData(), endPoint);
 
             //spawn second hero
             z = 5f;
             startMenu.GetHerosInfo(1, ref classIndex, ref name);
-            Packet spawn1Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z);
+            Packet spawn1Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z, name);
             socket.SendTo(spawn1Packet.GetData(), endPoint);
 
             //spawn third hero
             z += 5f;
             startMenu.GetHerosInfo(2, ref classIndex, ref name);
-            Packet spawn2Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z);
+            Packet spawn2Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z, name);
             socket.SendTo(spawn2Packet.GetData(), endPoint);
 
             //spawn fourth hero
             z += 5f;
             startMenu.GetHerosInfo(3, ref classIndex, ref name);
-            Packet spawn3Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z);
+            Packet spawn3Packet = new Packet(2, myIdOnServer, serverRoomId, classIndex, x, y, z, name);
             socket.SendTo(spawn3Packet.GetData(), endPoint);
 
             gameStarted = true;
@@ -298,7 +297,7 @@ public class GameClient : MonoBehaviour
 
     public void StartUI()
     {
-        startMenu.ActiveCamera();
+        startMenu.ActiveUI();
         bsm.ActiveUI();
         StartingMenu.SetActive(false);
         Console.WriteLine("UI Activated");
