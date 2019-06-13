@@ -36,7 +36,7 @@ public class BattleStateMachine : MonoBehaviour
     public List<Turn> TurnOrder;
     public bool TurnOrderContatinsHero(BaseClass hero)
     {
-        foreach(Turn turn in TurnOrder)
+        foreach (Turn turn in TurnOrder)
         {
             if (turn.Attacker == hero)
                 return true;
@@ -51,7 +51,6 @@ public class BattleStateMachine : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        //UI = GetComponent<UIManager>();
         UI = GetComponentInChildren<UIManager>();
         uiActivated = false;
 
@@ -103,19 +102,17 @@ public class BattleStateMachine : MonoBehaviour
         switch (BattleState)
         {
             case PerformAction.IDLE:
-                //if (TurnOrder.Count > 0)
-                //    battleState = PerformAction.PROCESSING_TURN;
                 break;
 
             case PerformAction.PROCESSING_TURN:
-                    BaseClass turnPerformer = TurnOrder[0].Attacker;
-                    CharacterStateMachine FSM = turnPerformer.GetFSM();
-                    if (TurnOrder[0].IsAoE || TurnOrder[0].TargetAlly)
-                        FSM.Target = TurnOrder[0].Attacker.transform;
-                    else
-                        FSM.Target = TurnOrder[0].Target.transform;
-                    FSM.currentState = CharacterStateMachine.TurnState.ACTION;
-                    battleState = PerformAction.PERFORM_ACTION;
+                BaseClass turnPerformer = TurnOrder[0].Attacker;
+                CharacterStateMachine FSM = turnPerformer.GetFSM();
+                if (TurnOrder[0].IsAoE || TurnOrder[0].TargetAlly)
+                    FSM.Target = TurnOrder[0].Attacker.transform;
+                else
+                    FSM.Target = TurnOrder[0].Target.transform;
+                FSM.currentState = CharacterStateMachine.TurnState.ACTION;
+                battleState = PerformAction.PERFORM_ACTION;
                 break;
 
             case PerformAction.PERFORM_ACTION:
@@ -138,6 +135,15 @@ public class BattleStateMachine : MonoBehaviour
         TurnOrder.Add(newTurn);
     }
 
+    public void ActiveSkillDisplayMenu()
+    {
+        UI.ActiveSkillDisplayMenu();
+    }
+    public void DisactiveSkillDisplayMenu()
+    {
+        UI.DisactiveSkillDisplayMenu();
+    }
+
     public void DamageCalculation()
     {
         if (TurnOrder[0].IsAoE)
@@ -157,6 +163,7 @@ public class BattleStateMachine : MonoBehaviour
         if (TurnOrder[0].HaveAdditionEffects)
             TurnOrder[0].ChosenAttack.AdditionalEffect();
     }
+
     public void OnTurnEnd()
     {
         //TurnOrder.RemoveAt(0);
@@ -185,7 +192,6 @@ public class BattleStateMachine : MonoBehaviour
             TurnOrder[0].SetChosenAttack(skill);
             TurnOrder[0].SetTarget(target);
 
-            //battleState = PerformAction.PROCESSING_TURN;
             UI.TurnReady();
         }
     }

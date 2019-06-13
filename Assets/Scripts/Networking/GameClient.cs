@@ -97,8 +97,6 @@ public class GameClient : MonoBehaviour
         address = "127.0.01";
         port = 9999;
 
-        //   clientID = (uint)DateTime.Now.Ticks;
-
         commandsTable = new Dictionary<byte, GameCommand>();
         //commandsTable[0] = Join;
         commandsTable[1] = Welcome;
@@ -106,7 +104,6 @@ public class GameClient : MonoBehaviour
         //commandsTable[3] = Update;
 
         //commandsTable[4] = Ready;
-
         commandsTable[5] = GameStart;
         //commandsTable[6] = UIStart;
 
@@ -117,58 +114,6 @@ public class GameClient : MonoBehaviour
 
         commandsTable[254] = StatusServer;
         //commandsTable[255] = Ack;
-    }
-
-    private void EndTurn(byte[] data, EndPoint sender)
-    {
-        bsm.EndTurn();
-    }
-    public void TurnEnded()
-    {
-        Packet TurnEndPacket = new Packet(10, myIdOnServer, serverRoomId);
-        socket.SendTo(TurnEndPacket.GetData(), endPoint);
-    }
-
-    private void ProcessTurn(byte[] data, EndPoint sender)
-    {
-        uint attackerId = BitConverter.ToUInt32(data, 1);
-        GameObject attackerObject = spawnedGameObjects[attackerId];
-        BaseClass attacker = attackerObject.GetComponent<BaseClass>();
-
-        int skillId = BitConverter.ToInt32(data, 5);
-        BaseAttack skill = attacker.GetSkillFromID(skillId);
-
-        uint targetId = BitConverter.ToUInt32(data, 9);
-        BaseClass target = null;
-        if (targetId != 172)//172 = targetNull
-        {
-            GameObject targetObject = spawnedGameObjects[targetId];
-            target = targetObject.GetComponent<BaseClass>();
-        }
-        bsm.TurnReady(attacker, skill, target);
-    }
-
-    public void SetTurnParameters(uint attackerId, int skillId, uint targetId)
-    {
-        Packet TurnParametersPacket = new Packet(8, myIdOnServer, serverRoomId, attackerId, skillId, targetId);
-        socket.SendTo(TurnParametersPacket.GetData(), endPoint);
-    }
-
-    private void TurnCreation(byte[] data, EndPoint sender)
-    {
-        uint heroId = BitConverter.ToUInt32(data, 1);
-        GameObject obj = spawnedGameObjects[heroId];
-        BaseClass hero = obj.GetComponent<BaseClass>();
-
-        Turn newTurn = new Turn();
-        newTurn.SetAttacker(hero);
-        bsm.ReceiveAction(newTurn);
-        Debug.Log("Add a new Turn");
-    }
-    public void CharacterATBReady(BaseClass characterReady)
-    {
-        Packet createTurnPacket = new Packet(7, myIdOnServer, serverRoomId, characterReady.ServerID);
-        socket.SendTo(createTurnPacket.GetData(), endPoint);
     }
 
     public void LogIn()//call [0]Join
@@ -204,11 +149,8 @@ public class GameClient : MonoBehaviour
     }
     private void Spawn(byte[] data, EndPoint sender)
     {
-        //Packet spawnPacket = new Packet(2, newHero.ClassID, newHero.ID, newHero.GetOwner().ClientID, newHero.X, newHero.Y, newHero.Z);
-
         uint prefabType = BitConverter.ToUInt32(data, 1);
         uint objectID = BitConverter.ToUInt32(data, 5);
-        //string inGameName = BitConverter.ToString(data, 9);   
         uint ClientID = BitConverter.ToUInt32(data, 9);
         string teamTag = "";
         if (MyIDonServer == ClientID)
@@ -227,7 +169,6 @@ public class GameClient : MonoBehaviour
             GameObject newGameObject = Instantiate(serverPrefabs[prefabType]);
 
             Vector3 position = new Vector3(x, y, z);
-            // newGameObject.name = inGameName + "_" + newGameObject.name;//string.Format("my avatar ID {0}", clientID);
             newGameObject.transform.position = position;
             spawnedGameObjects[objectID] = newGameObject;
 
@@ -241,7 +182,6 @@ public class GameClient : MonoBehaviour
             objectClass.SetID(objectID);
 
             objectClass.TeamTag = teamTag;
-            // newGameObject.GetComponent<BaseClass>().CharacterName = inGameName;
             newGameObject.GetComponent<CharacterStateMachine>().BSM = bsm;
             newGameObject.GetComponent<CharacterStateMachine>().SetServer(this);
 
@@ -295,7 +235,6 @@ public class GameClient : MonoBehaviour
             gameStarted = true;
         }
     }
-
     public void StartUI()
     {
         startMenu.ActiveUI();
@@ -303,6 +242,54 @@ public class GameClient : MonoBehaviour
         StartingMenu.SetActive(false);
         Console.WriteLine("UI Activated");
         startMenu.SetCamera(clientTeamTag);
+    }
+    public void CharacterATBReady(BaseClass characterReady)//call [7]TurnCreation
+    {
+        Packet createTurnPacket = new Packet(7, myIdOnServer, serverRoomId, characterReady.ServerID);
+        socket.SendTo(createTurnPacket.GetData(), endPoint);
+    }
+    private void TurnCreation(byte[] data, EndPoint sender)
+    {
+        uint heroId = BitConverter.ToUInt32(data, 1);
+        GameObject obj = spawnedGameObjects[heroId];
+        BaseClass hero = obj.GetComponent<BaseClass>();
+
+        Turn newTurn = new Turn();
+        newTurn.SetAttacker(hero);
+        bsm.ReceiveAction(newTurn);
+        Debug.Log("Add a new Turn");
+    }
+    public void SetTurnParameters(uint attackerId, int skillId, uint targetId)//call [8]ProcessTurn
+    {
+        Packet TurnParametersPacket = new Packet(8, myIdOnServer, serverRoomId, attackerId, skillId, targetId);
+        socket.SendTo(TurnParametersPacket.GetData(), endPoint);
+    }
+    private void ProcessTurn(byte[] data, EndPoint sender)
+    {
+        uint attackerId = BitConverter.ToUInt32(data, 1);
+        GameObject attackerObject = spawnedGameObjects[attackerId];
+        BaseClass attacker = attackerObject.GetComponent<BaseClass>();
+
+        int skillId = BitConverter.ToInt32(data, 5);
+        BaseAttack skill = attacker.GetSkillFromID(skillId);
+
+        uint targetId = BitConverter.ToUInt32(data, 9);
+        BaseClass target = null;
+        if (targetId != 172)//172 = targetNull
+        {
+            GameObject targetObject = spawnedGameObjects[targetId];
+            target = targetObject.GetComponent<BaseClass>();
+        }
+        bsm.TurnReady(attacker, skill, target);
+    }
+    public void TurnEnded()//call [10]EndTurn
+    {
+        Packet TurnEndPacket = new Packet(10, myIdOnServer, serverRoomId);
+        socket.SendTo(TurnEndPacket.GetData(), endPoint);
+    }
+    private void EndTurn(byte[] data, EndPoint sender)
+    {
+        bsm.EndTurn();
     }
 
     private void StatusServer(byte[] data, EndPoint sender)

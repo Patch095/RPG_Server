@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
     public Transform BlueTeamSelectedSpellInfo;
     public GameObject BlueTeamCancelButton;
     public GameObject BluePlayerWaitingPanel;
+    public GameObject BlueSkillInUsePanel;
 
     //Red Team UI
     public Transform RedTeamCharactersMenu;
@@ -48,6 +49,7 @@ public class UIManager : MonoBehaviour
     public Transform RedTeamSelectedSpellInfo;
     public GameObject RedTeamCancelButton;
     public GameObject RedPlayerWaitingPanel;
+    public GameObject RedSkillInUsePanel;
 
     public bool UIStarted;
     private bool sendInput;
@@ -63,8 +65,6 @@ public class UIManager : MonoBehaviour
 
         sendInput = false;
 
-        //PlayerInput = GUIState.ACTIVATED;
-
         //Blue team
         BlueTeamCharactersMenu.gameObject.SetActive(false);
         BlueTeamCommandMenu.SetActive(false);
@@ -74,6 +74,7 @@ public class UIManager : MonoBehaviour
         BlueTeamSpellsMenu.gameObject.SetActive(false);
         BlueTeamSelectedSpellInfo.gameObject.SetActive(false);
         BluePlayerWaitingPanel.gameObject.SetActive(false);//in attesa del player rosso che fa la mossa 
+        BlueSkillInUsePanel.SetActive(false);
 
         //Red team
         RedTeamCharactersMenu.gameObject.SetActive(false);
@@ -84,6 +85,7 @@ public class UIManager : MonoBehaviour
         RedTeamSelectedSpellInfo.gameObject.SetActive(false);
         RedTeamSpellsMenu.gameObject.SetActive(false);
         RedPlayerWaitingPanel.gameObject.SetActive(false); // in attesa del player blu che fa la mossa
+        RedSkillInUsePanel.SetActive(false);
     }
 
     public void SetUI()
@@ -397,7 +399,6 @@ public class UIManager : MonoBehaviour
         }
         RedTeamSpellsMenu.gameObject.SetActive(true);
     }
-
     public void MagicSelection(BaseAttack Spell)
     {
         Spell.TurnInfo = playerChoise;
@@ -449,19 +450,30 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ActiveSkillDisplayMenu()
+    {
+        if (playerChoise.ChosenAttack != null)
+        {
+            BlueSkillInUsePanel.SetActive(true);
+            BlueSkillInUsePanel.GetComponentInChildren<TextMeshPro>().text = playerChoise.ChosenAttack.AttackName;
+            RedSkillInUsePanel.SetActive(true);
+            RedSkillInUsePanel.GetComponentInChildren<TextMeshPro>().text = playerChoise.ChosenAttack.AttackName;
+        }
+    }
+    public void DisactiveSkillDisplayMenu()
+    {
+        BlueSkillInUsePanel.SetActive(false);
+        RedSkillInUsePanel.SetActive(false);
+    }
+
     public void TargetSelection(BaseClass choosenTarget)
     {
         playerChoise.SetTarget(choosenTarget);
         PlayerInput = GUIState.TARGET_SELECTION;
-        //BSM.ProcesessingTurn();
-        //PlayerInput = GUIState.DONE;
     }
     public void AoETargetSelection(List<BaseClass> targets)
     {
         PlayerInput = GUIState.TARGET_SELECTION;
-
-        //BSM.ProcesessingTurn();
-        //PlayerInput = GUIState.DONE;
     }
 
     void SendTurnParameters()

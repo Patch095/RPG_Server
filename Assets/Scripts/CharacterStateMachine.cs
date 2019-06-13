@@ -160,6 +160,9 @@ public class CharacterStateMachine : MonoBehaviour
                 Target = BSM.TurnOrder[0].Target.transform;
 
             //Animation
+            if (BSM.TurnOrder[0].ChosenAttack != null)
+                BSM.ActiveSkillDisplayMenu();
+
             Vector3 offset = Target.forward * 1.8f;
             endPos = Target.position + offset;
             while (MoveTowardTarget(endPos)) //move toward attack target
@@ -168,6 +171,7 @@ public class CharacterStateMachine : MonoBehaviour
             yield return new WaitForSeconds(0.35f);//Damage Calculation
             BSM.DamageCalculation();
             BSM.ApplyAdditionEffects();
+            BSM.DisactiveSkillDisplayMenu();
 
             while (MoveTowardTarget(startPos)) //return to your startPosition
                 yield return null;
@@ -177,10 +181,6 @@ public class CharacterStateMachine : MonoBehaviour
             BSM.OnTurnEnd();
 
             onAnimation = false;
-
-            //reset character for a new turn
-            //currentCooldown = 0f;
-            //currentState = TurnState.PROCESSING_TURN;
         }
     }
 

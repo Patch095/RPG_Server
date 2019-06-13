@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-//public class Turn : MonoBehaviour
 public class Turn
 {
-    public BaseClass attacker;
+    private BaseClass attacker;
     public BaseClass Attacker { get { return attacker; } }
     public void SetAttacker(BaseClass atk)
     {
         attacker = atk;
     }
 
-    public BaseClass target;
+    private BaseClass target;
     public BaseClass Target { get { return target; } }
     public void SetTarget(BaseClass targ)
     {
@@ -47,7 +46,7 @@ public class Turn
         }
     }
 
-    public BaseAttack chosenAttack;
+    private BaseAttack chosenAttack;
     public BaseAttack ChosenAttack { get { return chosenAttack; } }
     public void SetChosenAttack(BaseAttack attack)
     {
